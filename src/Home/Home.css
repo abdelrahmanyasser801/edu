@@ -34,11 +34,12 @@
   .text-block {
     position: absolute;
     bottom: 30%;
-    right: 30%;
-    background-color: grey;
+    right: 25%;
+    background-color: rgba(80, 145, 109, 0.774);
     color: white;
     padding-left: 20px;
     padding-right: 20px;
+    min-width: 40% !important;
   }
   @media only screen and (max-width:600px){
     .icon{
