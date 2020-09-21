@@ -1,0 +1,35 @@
+.admin-view-form{
+    margin-top: 100px;
+}
+
+.admin-name{
+    background-color: rgb(32, 32, 32);
+    color: white;
+    width: 25%;
+    margin: 5% auto;
+    height: 50px;
+    transform: skewX(-40deg);
+    text-align:center ;
+    font-size: 1.2rem;
+    padding-top: 5px;
+}
+.cover-img{
+    border-radius: 50% !important;
+    height:140px !important;
+    width: 140px !important;
+    margin: 0 auto;
+}
+.admin-view-form-button{
+    margin: auto !important;
+    background-color: rgb(158, 79, 144) !important;
+    color: white !important;
+    border-radius:20px !important ;
+}
+@media only screen and (max-width: 600px) {
+    .admin-name{
+        background-color: rgb(32, 32, 32);
+        color: white;
+        width: 50%;
+    
+    }
+}

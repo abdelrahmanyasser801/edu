@@ -1,0 +1,35 @@
+.addquestion-form{
+    margin-top: 100px;
+
+}
+
+.addquestion-form input{
+    width: 350px;
+    height: 15px;
+    direction: rtl;
+    margin-bottom: 25px;
+}
+.inp1{
+    color: black !important;
+    font-size: 25px !important;
+    direction: rtl;
+}
+.add-button{
+    background-color: rgb(158, 79, 144) !important;
+    color: white !important;
+    width: 120px !important;
+    color: white;
+    border-radius: 25px !important;
+    position: relative;
+    margin: 25px !important;
+}
+.ques-upload-button{
+    background-color: rgb(158, 79, 144) !important;
+    color: white !important;
+    width: 120px !important;
+    color: white;
+    border-radius: 25px !important;
+    margin: 25px !important;
+
+}
+

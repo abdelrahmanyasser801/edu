@@ -1,0 +1,52 @@
+.student-form{
+    direction: rtl;
+    margin-top: 100px;
+
+}
+.student-title{
+    background-color: rgb(64,133,78);
+    width: 350px;
+    border-radius: 15px;
+    color: white;
+    margin: 35px auto;
+    padding-bottom:10px ;
+}
+
+#demo-simple-select-outlined{
+    width: 350px !important;
+    border: 1px solid black !important;
+
+
+}
+#demo-simple-select-outlined-label{
+    color: black !important;
+    font-size: 20px;
+}
+.student-form input{
+    width: 350px;
+    height: 15px;
+    direction: rtl;
+    margin-bottom: 5px !important;
+}
+.out-input{
+    width: 350px !important;
+}
+.inp1{
+    color: black !important;
+    font-size: 25px !important;
+}
+.sub-button{
+    background-color: rgb(158, 79, 144) !important;
+    color: white !important;
+    width: 120px !important;
+    color: white;
+    border-radius: 25px !important;
+
+}
+.upload-button{
+    background-color: rgb(158, 79, 144) !important;
+    color: white !important;
+    width: 120px !important;
+    color: white;
+    border-radius: 25px !important;
+}

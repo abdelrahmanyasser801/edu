@@ -1,0 +1,36 @@
+.add-grp{
+    margin-top: 100px;
+}
+
+.selector{
+    position: relative;
+    margin-top: 10px !important;
+}
+.addgroup-btn{
+    background-color: rgb(158, 79, 144) !important;
+    margin-top: 10px !important;
+    color: white !important;
+    width: 130px !important;
+    font-size: 18px !important;
+    border-radius:10px !important ;
+}
+.out-input1{
+    width: 350px;
+    direction: rtl;
+  
+}
+.inp10{
+    direction: rtl !important;
+    font-size: 20px !important;
+    font-weight: bold !important;
+    margin-bottom: 10px !important;
+    margin-top: 10px !important;
+}
+.submit-btn{
+    background-color: rgb(158, 79, 144) !important;
+    color: white !important;
+    width: 130px !important;
+    font-size: 18px !important;
+    border-radius:10px !important;
+    margin-top: 50px !important;
+}
