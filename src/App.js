@@ -11,7 +11,15 @@ import Addquestion from "./Addquestion/Addquestion.js"
 import Quizview from "./Quizview/Quizview.js"
 import Allquiz from "./Allquiz/Allquiz.js"
 import Addgroup from "./Addgroup/Addgroup.js"
+import Studentgrade from "./Studentgrade/Studentgrade"
+import ActivationStudents from "./ActivationStudents/ActivationStudents"
+import EditStudent from "./EditStudent/EditStudent"
 
+
+// {/* ************** tareq  ********* */}
+import ShowQuestionsToAdmin from "./ShowQuestionsToAdmin/index"
+import GradesStudents from "./Grades/index"
+import AdminPage from "./AdminPage/index"
 import {
   BrowserRouter as Router,
   Switch,

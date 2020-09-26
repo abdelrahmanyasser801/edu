@@ -4,7 +4,7 @@ import turtle from "../turtle.jpg"
 import "./Login.css";
 import clsx from 'clsx';
 import IconButton from '@material-ui/core/IconButton';
-
+import axios from 'axios'
 import Avatar from '@material-ui/core/Avatar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Box from '@material-ui/core/Box';
@@ -46,6 +46,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignIn() {
+  const [email , setEmail] = useState('')
+  const [password , setPassword] = useState('')
   function UselocalStorage (localitem){
     const [loc,setState] = useState(localStorage.getItem(localitem))
     function setLocal(newitem){
@@ -56,15 +58,17 @@ export default function SignIn() {
    return [loc ,setLocal];
 }   
 const [fruit,setFruit] = UselocalStorage("user")
+
+const handleSubmit=(e)=>{
+e.preventDefault();
+
+}
   
   const [values, setValues] = useState({
     password: '', 
     showPassword: false,
   });
   
-  const handleChange = (prop) => (event) => {
-    setValues({ ...values, [prop]: event.target.value });
-  };
   
   const handleClickShowPassword = () => {
     setValues({ ...values, showPassword: !values.showPassword });
@@ -75,10 +79,27 @@ const [fruit,setFruit] = UselocalStorage("user")
   };
   const handlelogin =(e)=>{
     e.preventDefault()
-    
-    setFruit("std")
-    window.location.href = "/dashboard";
-    
+    const data={
+      email:email,
+      password:password
+    }
+    axios.post("", data)
+      .then(res =>{
+        console.log(res)
+        if(res.data==="success"){
+          setFruit("std")
+          localStorage.setItem("token",res.data.token)
+          window.location.href = "/dashboard";
+        }
+      })
+      .catch(err =>{
+        console.log(err)
+      })
+      
+      
+      
+
+   
     }
   const classes = useStyles();
 
@@ -94,6 +115,7 @@ const [fruit,setFruit] = UselocalStorage("user")
         </Typography>
         <form className={classes.form} Validate>
         <FormLabel className="label"
+        
         >
         اسم المستخدم
 
@@ -102,6 +124,8 @@ const [fruit,setFruit] = UselocalStorage("user")
             margin="normal"
             required
             fullWidth
+            value={email}
+            onChange={e =>{setEmail(e.target.value)}}
             id="email"
             name="email"
             autoComplete="email"
@@ -128,8 +152,8 @@ const [fruit,setFruit] = UselocalStorage("user")
             className="inp"
             id="standard-adornment-password"
             type={values.showPassword ? 'text' : 'password'}
-            value={values.password}
-            onChange={handleChange('password')}
+            value={password}
+            onChange={e =>setPassword(e.target.value)}
             endAdornment={
               <InputAdornment position="end">
                 <IconButton

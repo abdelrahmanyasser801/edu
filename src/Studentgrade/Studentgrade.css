@@ -1,0 +1,135 @@
+.welcome-grade-cont-os{
+    background-color: #303030;
+    max-width: 50% !important;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 20px;
+}
+
+.student-grade-cont-os{
+    max-width: 90% !important;
+    height: 100px;
+    margin-top: 100px !important;  
+    
+}
+.view-grade-cont-os{
+    background-color: white;
+    max-width: 70% !important;
+    height: 500px;
+    overflow: scroll;
+
+}
+
+
+
+
+
+
+.student-name-os{
+    background-color: rgb(185, 185, 185);
+    float: right;
+    color: white;
+    border-color: black;
+    border-style: solid;
+    max-width: 60% !important;
+    text-align: right !important;
+    padding-right: 10px !important;
+    margin-top: 20px;
+
+}
+
+
+.student-grade-os{
+    float: left;
+    color: rgb(29, 22, 25);
+    background-color: white;
+    max-width: 20% !important;
+    border-style: solid;
+    margin-top: 20px;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+    
+}
+
+
+.search-grade-cont-os{
+    background-color: rgb(164, 175, 162);
+      
+}
+.select-os{
+    background-color:green;
+    color: white;
+    width: 150px;
+    height: 40px;
+    margin-top: 20px;
+    font-size: 15px;
+    border: none;
+    text-align: right;
+    border-radius: 10px;
+}
+
+
+input{
+    width: 60%;
+    background-color: #ffffff;
+    color: rgb(24, 23, 23);
+    margin-top: 40px;
+    margin-left: 25px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    height: 30px;
+}
+
+.btn-os{
+    width: 40%;
+  background-color: #8a1f3a;
+  color: white;
+  padding: 14px 20px;
+  margin-top: 40px;
+  margin-left: 25px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+
+
+
+@media (max-width:600px){
+    .view-grade-cont-os{
+        float: none;
+    }
+    .search-grade-cont-os{
+        float: none;
+        height: 300px;
+        max-width: 70% !important;
+
+    }
+.p-oss{
+    font-size: 10px;
+}
+
+}
+
+
+
+@media (min-width:601px){
+    .view-grade-cont-os{
+        float: right;
+    }
+    .search-grade-cont-os{
+        float: left;
+        height: 500px;
+        max-width: 30% !important;
+    }
+}
+
+
+
+
+
+
+
+
+

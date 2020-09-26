@@ -4,7 +4,7 @@ import turtle from "../turtle.jpg"
 import "./Teacherlogin.css";
 import clsx from 'clsx';
 import IconButton from '@material-ui/core/IconButton';
-
+import axios from "axios"
 import Avatar from '@material-ui/core/Avatar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Box from '@material-ui/core/Box';
@@ -46,6 +46,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignIn() {
+  const [email , setEmail] = useState('')
+  const [password , setPassword] = useState('')
   function UselocalStorage (localitem){
     const [loc,setState] = useState(localStorage.getItem(localitem))
     function setLocal(newitem){
@@ -74,8 +76,24 @@ const [fruit,setFruit] = UselocalStorage("user")
   };
   const handlelogin =(e)=>{
     e.preventDefault()
-    setFruit("teacher")
-    window.location.href = "/dashboard";
+    const data={
+      email:email,
+      password:password
+    }
+    axios.post("", data)
+      .then(res =>{
+        console.log(res)
+        if(res.data==="success"){
+          setFruit("teacher")
+          localStorage.setItem("token",res.data.token)
+          window.location.href = "/dashboard";
+        }
+      })
+      .catch(err =>{
+        console.log(err)
+      })
+      
+    
     
     }
   const classes = useStyles();
