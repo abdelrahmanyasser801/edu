@@ -1,11 +1,12 @@
 import React from 'react';
+
+/*******Yasser  *********/
+
 import Home from "../Home/Home"
 import Login from "../Login/Login"
 import Teacherlogin from "../Teacherlogin/Teacherlogin"
 import Adminlogin from "../Adminlogin/Adminlogin"
-
 import Dashboard from "../Dashboard/Dashboard"
-
 import Addteacher from "../Addteacher/Addteacher"
 import Addstudent from "../Addstudent/Addstudent"
 import Addquestion from "../Addquestion/Addquestion"
@@ -14,6 +15,16 @@ import Adminview from "../Adminview/Adminview"
 import Allquiz from "../Allquiz/Allquiz"
 import Quizview from "../Quizview/Quizview"
 import Studentview from "../Studentview/Studentview"
+
+// {/* ************** oss  ********* */}
+import Studentgrade from "../Studentgrade/Studentgrade"
+import ActivationStudents from "../ActivationStudents/ActivationStudents"
+import EditStudent from "../EditStudent/EditStudent"
+import ShowQuestionsToAdmin from "../ShowQuestionsToAdmin/index"
+import GradesStudents from "../Grades/index"
+import AdminPage from "../AdminPage/index"
+
+
 
 
 
@@ -193,6 +204,44 @@ export default function Nav() {
             </ListItem>
           </Link>
 
+
+
+          <Link to='/grades'>
+            <ListItem button>
+              <ListItemText primary="grades" />
+            </ListItem>
+          </Link>
+
+          <Link to='/active'>
+            <ListItem button>
+              <ListItemText primary=" active " />
+            </ListItem>
+          </Link>
+
+          <Link to='/edit'>
+            <ListItem button>
+              <ListItemText primary=" edit " />
+            </ListItem>
+          </Link>
+
+          <Link to='/show-question'>
+            <ListItem button>
+              <ListItemText primary="  show quest" />
+            </ListItem>
+          </Link>
+
+          <Link to='/studentgrades'>
+            <ListItem button>
+              <ListItemText primary="student grades " />
+            </ListItem>
+          </Link>
+
+          <Link to='/adminpage'>
+            <ListItem button>
+              <ListItemText primary="  admin " />
+            </ListItem>
+          </Link>
+
     </List>
         <Divider />
         
@@ -212,6 +261,15 @@ export default function Nav() {
           <Route exact path="/adminlogin" component={withRouter(Adminlogin)}/>
           <Route exact path="/teacherlogin" component={withRouter(Teacherlogin)}/>
           <Route exact path="/dashboard" component={withRouter(Dashboard)}/>
+
+             {/* ************** oss  ********* */}
+          <Route  path="/grades" component={Studentgrade}/>
+          <Route  path="/active" component={ActivationStudents}/>
+          <Route  path="/edit" component={EditStudent}/>
+          <Route  path="/show-question" component={ShowQuestionsToAdmin}/>
+          <Route  path="/studentgrades" component={GradesStudents}/>
+          <Route  path="/adminpage" component={AdminPage}/>
+ 
 
       </Switch>
       </Router>

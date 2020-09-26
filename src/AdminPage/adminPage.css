@@ -1,0 +1,85 @@
+.Container-TM{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.adminNameAndFunctionsSection-TM{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    background-color: white;
+    flex: 2;
+    margin-left: 10rem;
+}
+
+.adminNameSection-TM{
+    background-color: rgb(44, 44, 44);
+    color: white;
+    padding: 1rem 6rem;
+    margin-top: 5rem;
+    margin-bottom: 5rem;
+    transform: skew(-30deg);
+}
+
+
+.adminFunctionsSection-TM{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    align-items: flex-end;
+}
+
+.functionButton-TM{
+    color: white;
+    background-color: rgb(36, 112, 36);
+    margin: 1rem;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 180%;
+    border: none;
+    width: 170px;
+    padding: .5rem;
+}
+
+.functionButton-TM:hover{
+    cursor: pointer;
+    background-color: rgb(62, 155, 62);
+    transition: .6s ease-in-out;
+}
+
+.functionButtonSideBar-TM{
+    color: white;
+    background-color: rgb(140, 35, 150);
+    margin: 1rem;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 180%;
+    border: none;
+    width: 170px;
+    padding: .5rem;
+}
+
+.functionButtonSideBar-TM:hover{
+    cursor: pointer;
+    background-color: rgb(172, 65, 182);
+    transition: .6s ease-in-out;
+}
+
+.adminFunctionsSideBar-TM{
+    border-right: 1px solid black;
+    border-left: 1px solid black;;
+    margin-right: 15rem;
+    flex: .5;
+    background-color: rgb(235, 249, 252);
+}
+
+
+.footerContainer-TM{
+    display: flex;
+    background-color: black;
+    margin: 0rem 15rem 0rem 10rem ;
+    padding: 1.15rem;
+}

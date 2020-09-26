@@ -1,0 +1,106 @@
+
+
+.headerContainer-TM{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    margin-right: 15rem;
+    margin-top: 80px;
+}
+
+.headSection-TM{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.examTitle-TM{
+    text-align: right;
+    font-weight: bolder;
+    margin-top: 2rem;
+    font-size: 200%;
+}
+
+.titleSection-TM{
+    background-color: white;
+    color: black;
+    border: 2px solid black;
+    font-weight: bolder;
+    font-size: 180%;
+    margin-left: 1rem;
+    flex: .7;
+    height: 40px;
+    text-align: center;
+    margin-top: .1rem;
+}
+
+.showExamButton-TM{
+    color: white;
+    background-color: rgb(140, 35, 150);
+    margin: .1rem;
+    border-radius: 15px;
+    font-weight: bolder;
+    font-size: 120%;
+    border: none;
+    width: 170px;
+    padding: .7rem;
+}
+
+.showExamButton-TM:hover{
+    cursor: pointer;
+    background-color: rgb(172, 65, 182);
+    transition: .6s ease-in-out;
+}
+
+
+.makingExamSection-TM{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin-left: 17.5rem;
+    margin-right: 2rem;
+    margin-top: 4rem;
+}
+
+.editingQuestions-TM{
+    background-color: rgb(160, 178, 229);
+    border: 3px solid black;
+    margin-top: 1rem;
+    margin-right: 13rem;
+}
+
+.questionSection-TM{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: white;
+    margin: 1rem;
+    height: 50px;
+    padding: .1rem;
+    border: 2px solid black;
+}
+
+.editAndDeletequestionButtons-TM{
+    margin-top: 0.6rem;
+}
+
+
+.editQuestionButton-TM{
+    color: white;
+    background-color: rgb(140, 35, 150);
+    border-radius: 15px;
+    font-weight: bold;
+    font-size: 90%;
+    border: none;
+    width: 60px;
+    text-align: center;
+    padding: .5rem 1rem;
+    margin: -1rem .3rem;
+}
+
+.footerContainerShowQuestions-TM{
+    display: flex;
+    background-color: black;
+    padding: 1.15rem;
+    margin-top: 3.6rem;
+}

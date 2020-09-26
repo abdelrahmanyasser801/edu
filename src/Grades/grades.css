@@ -1,0 +1,38 @@
+
+.teacherName__Section__TM{
+    margin-left: 33rem;
+    font-weight: bolder;
+    margin-top: 80px;
+    font-size: 130%;
+    border: 3px solid rgb(172, 27, 177);
+    text-align: center;
+    width: 20%;
+    padding: 2rem;
+    background-color: white;
+}
+
+
+.gradesTable__Section__TM{
+    margin-left: 21.25rem;
+    margin-bottom: 6rem;
+}
+
+table > thead > th{
+    border: 3px solid rgb(172, 27, 177);
+    padding: 2rem;
+    font-size: 130%;
+    background-color: white;
+}
+
+table > tbody > td{
+    border: 3px solid rgb(172, 27, 177);
+    padding: 2rem;
+    font-size: 130%;
+    background-color: white;
+}
+
+.footerContainer-TM{
+    display: flex;
+    background-color: black;
+    padding: 1.15rem;
+}
