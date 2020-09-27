@@ -1,10 +1,10 @@
-import React ,{useState} from "react"
+import React ,{useState, useEffect} from "react"
 import { FormControl,InputLabel,Input,InputAdornment, Button ,TextField,FormLabel} from '@material-ui/core';
 import turtle from "../turtle.jpg"
 import "./Login.css";
 import clsx from 'clsx';
 import IconButton from '@material-ui/core/IconButton';
-
+import axios from 'axios'
 import Avatar from '@material-ui/core/Avatar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Box from '@material-ui/core/Box';
@@ -15,7 +15,7 @@ import Container from '@material-ui/core/Container';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
-
+import Swal from "sweetalert2"
 
 
 const useStyles = makeStyles((theme) => ({
@@ -46,6 +46,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignIn() {
+  const [email , setEmail] = useState('')
+  const [password , setPassword] = useState('')
   function UselocalStorage (localitem){
     const [loc,setState] = useState(localStorage.getItem(localitem))
     function setLocal(newitem){
@@ -56,15 +58,11 @@ export default function SignIn() {
    return [loc ,setLocal];
 }   
 const [fruit,setFruit] = UselocalStorage("user")
-  
   const [values, setValues] = useState({
     password: '', 
     showPassword: false,
   });
   
-  const handleChange = (prop) => (event) => {
-    setValues({ ...values, [prop]: event.target.value });
-  };
   
   const handleClickShowPassword = () => {
     setValues({ ...values, showPassword: !values.showPassword });
@@ -75,11 +73,51 @@ const [fruit,setFruit] = UselocalStorage("user")
   };
   const handlelogin =(e)=>{
     e.preventDefault()
-    
-    setFruit("std")
-    window.location.href = "/dashboard";
-    
+    const data={
+      email:email,
+      password:password
     }
+    axios.post("https://edu-up.herokuapp.com/students/login", data)
+      .then(res =>{
+        console.log(res)
+        if(res.access_token){
+          setFruit("std")
+          localStorage.setItem("token",res.access_token)
+          window.location.href = "/dashboard";
+        }else{
+         window.alert(res.error)
+
+        }
+      })
+      .catch(error =>{
+        console.log(error)
+        if (error.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          window.alert(error.response.status);
+          window.alert(error.response.message);
+          
+          
+
+        } else if (error.request) {
+          // The request was made but no response was received
+          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+          // http.ClientRequest in node.js
+          window.alert(error.request);
+
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          window.alert('Error', error.message);
+        }
+      
+
+      })
+      
+      
+
+   
+    }
+    
   const classes = useStyles();
 
   return (
@@ -94,6 +132,7 @@ const [fruit,setFruit] = UselocalStorage("user")
         </Typography>
         <form className={classes.form} Validate>
         <FormLabel className="label"
+        
         >
         اسم المستخدم
 
@@ -102,6 +141,8 @@ const [fruit,setFruit] = UselocalStorage("user")
             margin="normal"
             required
             fullWidth
+            value={email}
+            onChange={e =>{setEmail(e.target.value)}}
             id="email"
             name="email"
             autoComplete="email"
@@ -128,8 +169,8 @@ const [fruit,setFruit] = UselocalStorage("user")
             className="inp"
             id="standard-adornment-password"
             type={values.showPassword ? 'text' : 'password'}
-            value={values.password}
-            onChange={handleChange('password')}
+            value={password}
+            onChange={e =>setPassword(e.target.value)}
             endAdornment={
               <InputAdornment position="end">
                 <IconButton
