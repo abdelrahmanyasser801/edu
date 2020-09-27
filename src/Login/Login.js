@@ -1,4 +1,4 @@
-import React ,{useState} from "react"
+import React ,{useState, useEffect} from "react"
 import { FormControl,InputLabel,Input,InputAdornment, Button ,TextField,FormLabel} from '@material-ui/core';
 import turtle from "../turtle.jpg"
 import "./Login.css";
@@ -15,7 +15,7 @@ import Container from '@material-ui/core/Container';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
-
+import Swal from "sweetalert2"
 
 
 const useStyles = makeStyles((theme) => ({
@@ -58,12 +58,6 @@ export default function SignIn() {
    return [loc ,setLocal];
 }   
 const [fruit,setFruit] = UselocalStorage("user")
-
-const handleSubmit=(e)=>{
-e.preventDefault();
-
-}
-  
   const [values, setValues] = useState({
     password: '', 
     showPassword: false,
@@ -83,24 +77,46 @@ e.preventDefault();
       email:email,
       password:password
     }
-    axios.post("", data)
+    axios.post("https://edu-up.herokuapp.com/students/login", data)
       .then(res =>{
         console.log(res)
-        if(res.data==="success"){
+        if(res.access_token){
           setFruit("std")
-          localStorage.setItem("token",res.data.token)
+          localStorage.setItem("token",res.access_token)
           window.location.href = "/dashboard";
+        }else{
+         window.alert(res.error)
+
         }
       })
-      .catch(err =>{
-        console.log(err)
-      })
+      .catch(error =>{
+        console.log(error)
+        if (error.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          window.alert(error.response.status);
+          window.alert(error.response.message);
+          
+
+        } else if (error.request) {
+          // The request was made but no response was received
+          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+          // http.ClientRequest in node.js
+          window.alert(error.request);
+
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          window.alert('Error', error.message);
+        }
       
+
+      })
       
       
 
    
     }
+    
   const classes = useStyles();
 
   return (
