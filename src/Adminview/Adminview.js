@@ -1,8 +1,9 @@
-import React ,{useState} from "react"
+import React ,{useState, useEffect} from "react"
 import "./Adminview.css"
 import {Grid,Card,CardActionArea ,CardActions ,CardContent ,CardMedia ,Button,Typography  } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import placeholder from "./placeholder.jpg"
+import axios from "axios"
 const useStyles = makeStyles({
     root: {
       maxWidth: 275,
@@ -14,16 +15,33 @@ const useStyles = makeStyles({
     }
   });
 export default function Adminview(){
+  
+  
     const classes = useStyles();
 
     const [admin ,setAdmin] = useState("اسم الادمن");
     const [imgplaceholder , setImgplaceholder] = useState(placeholder)
+    const [teachers ,setteacher] = useState([]);
+
+    useEffect(()=>{
+
+      axios.get("https://edu-up.herokuapp.com/operators/dashboard/all_teachers")
+      .then(res=>{
+        setteacher(res.data)
+        console.log(res)
+      })
+      .catch(err=>{
+        console.log(err)
+      })
+    },[])
     return(
         
         <div className="admin-view-form">
             <p className="admin-name">اهلا يا {admin} </p>
 
-        <Grid container 
+{teachers.map(teacher=>{
+    return(
+<Grid container key={teacher.id}
         direction="row"
         justify="center"
         alignItems="center"
@@ -43,10 +61,10 @@ export default function Adminview(){
         /> 
         <CardContent>
           <Typography gutterBottom variant="h3" component="h2">
-            اسم المدرس
+            {teacher.username}
           </Typography>
           <Typography className={classes.text} variant="h5" align="center"  component="p">
-            الماده
+            {teacher.mobile}
           </Typography>
         </CardContent>
       </CardActionArea>
@@ -75,7 +93,10 @@ export default function Adminview(){
             </Grid>
             
             </Grid>
+          )
+})}
+
         
         </div>
-    )
+    );
 }

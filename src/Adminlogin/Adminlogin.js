@@ -4,7 +4,7 @@ import turtle from "../turtle.jpg"
 import "./Adminlogin.css";
 import clsx from 'clsx';
 import IconButton from '@material-ui/core/IconButton';
-
+import axios from "axios"
 import Avatar from '@material-ui/core/Avatar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Box from '@material-ui/core/Box';
@@ -15,7 +15,7 @@ import Container from '@material-ui/core/Container';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
-
+import Swal from "sweetalert2"
 
 const useStyles = makeStyles((theme) => ({
 
@@ -45,7 +45,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignIn() {
-  
+  const [name , setname] = useState('')
+  const [password , setPassword] = useState('')
   function UselocalStorage (localitem){
     const [loc,setState] = useState(localStorage.getItem(localitem))
     function setLocal(newitem){
@@ -55,6 +56,7 @@ export default function SignIn() {
     }
    return [loc ,setLocal];
 }   
+
 const [fruit,setFruit] = UselocalStorage("user")
 
 const [values, setValues] = useState({
@@ -75,9 +77,54 @@ const [values, setValues] = useState({
   };
   const handlelogin =(e)=>{
     e.preventDefault()
-    setFruit("admin")
-    window.location.href = "/dashboard";
-    
+    const data={
+      name:name,
+      password:password
+    }
+    axios.post("https://edu-up.herokuapp.com/operators/login", data)
+      .then(res =>{
+        console.log(res)
+        if(res.access_token){
+          setFruit("admin")
+          localStorage.setItem("token",res.access_token)
+          window.location.href = "/dashboard";
+        }else{
+         window.alert(res.error)
+
+        }
+      })
+      .catch(err =>{
+        console.log(err)
+        if (err.response) {
+          const status =err.response.status;
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          //window.alert(error.response.status);
+          //window.alert(error.response.message);
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: status,
+          });        return false;
+          
+
+        } else if (err.request) {
+          // The request was made but no response was received
+          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+          // http.ClientRequest in node.js
+          window.alert(err.request);
+
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          window.alert('Error', err.message);
+        }
+      
+
+      })
+      
+      
+
+   
     }
   const classes = useStyles();
 
@@ -98,12 +145,13 @@ const [values, setValues] = useState({
 
         </FormLabel>
         <Input
+        onChange={e=>setname(e.target.value)}
             margin="normal"
             required
             fullWidth
-            id="email"
-            name="email"
-            autoComplete="email"
+            id="text"
+            name="name"
+            autoComplete="text"
             autoFocus
             className="inp"
             startAdornment={
@@ -128,7 +176,7 @@ const [values, setValues] = useState({
             id="standard-adornment-password"
             type={values.showPassword ? 'text' : 'password'}
             value={values.password}
-            onChange={handleChange('password')}
+            onChange={e=>setPassword(e.target.value)}
             endAdornment={
               <InputAdornment position="end">
                 <IconButton

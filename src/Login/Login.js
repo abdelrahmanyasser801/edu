@@ -89,25 +89,31 @@ const [fruit,setFruit] = UselocalStorage("user")
 
         }
       })
-      .catch(error =>{
-        console.log(error)
-        if (error.response) {
+      .catch(err =>{
+        console.log(err)
+        if (err.response) {
+          const status =err.response.status;
+          const message ="تاكد من كلمه المرور و الايميل"
           // The request was made and the server responded with a status code
           // that falls out of the range of 2xx
-          window.alert(error.response.status);
-          window.alert(error.response.message);
-          
+          //window.alert(error.response.status);
+          //window.alert(error.response.message);
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: status+" "+message,
+          });        return false;
           
 
-        } else if (error.request) {
+        } else if (err.request) {
           // The request was made but no response was received
           // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
           // http.ClientRequest in node.js
-          window.alert(error.request);
+          window.alert(err.request);
 
         } else {
           // Something happened in setting up the request that triggered an Error
-          window.alert('Error', error.message);
+          window.alert('Error', err.message);
         }
       
 
