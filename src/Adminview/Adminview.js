@@ -15,39 +15,39 @@ const useStyles = makeStyles({
     }
   });
 export default function Adminview(){
-  
+  useEffect (()=>{
+    axios.get("https://edu-up.herokuapp.com/operators/dashboard/all_teachers")
+    .then(res=>{
+      console.log(res.data)
+      setallteachers(res.data.teachers)
+    })
+    .catch(err=>{
+      console.log(err)
+    })
+  },[])
   
     const classes = useStyles();
 
     const [admin ,setAdmin] = useState("اسم الادمن");
     const [imgplaceholder , setImgplaceholder] = useState(placeholder)
-    const [teachers ,setteacher] = useState([]);
+    const [allteachers ,setallteachers] = useState([]);
 
-    useEffect(()=>{
-
-      axios.get("https://edu-up.herokuapp.com/operators/dashboard/all_teachers")
-      .then(res=>{
-        setteacher(res.data)
-        console.log(res)
-      })
-      .catch(err=>{
-        console.log(err)
-      })
-    },[])
+   
     return(
         
         <div className="admin-view-form">
             <p className="admin-name">اهلا يا {admin} </p>
 
-{teachers.map(teacher=>{
+{allteachers.map(teacher=>{
     return(
-<Grid container key={teacher.id}
-        direction="row"
+<Grid container key={teacher.id} 
         justify="center"
         alignItems="center"
         spacing={2}
         >
-            <Grid item>
+            <Grid item
+        
+            >
             <Card className={classes.root}>
       <CardActionArea>
       
@@ -55,7 +55,8 @@ export default function Adminview(){
           component="img"
           alt="img"
          
-          image={imgplaceholder}
+          image={teacher.image_url?setImgplaceholder(teacher.image_url):
+            imgplaceholder}
           title="img"
           className="cover-img"
         /> 
@@ -74,12 +75,32 @@ export default function Adminview(){
         direction="row"
         justify="center"
         alignItems="center"
-        spacing ={5}
+        spacing ={1}
         >
           <Grid item>
         <Button variant="contained" className="admin-view-form-button">
           الامتحانات
         </Button>
+        </Grid>
+        <Grid item>
+        <Button variant="contained" className="admin-view-form-button">
+          حذف الطالب
+        </Button>
+        </Grid>
+        <Grid item>
+        <Button variant="contained" className="admin-view-form-button">
+        اضافه طالب
+        </Button>
+        </Grid>
+
+        <Grid item>
+        <Button variant="contained" className="admin-view-form-button">
+جذف        </Button>
+        </Grid>
+
+        <Grid item>
+        <Button variant="contained" className="admin-view-form-button">
+تعديل        </Button>
         </Grid>
         <Grid item>
         <Button variant="contained" className="admin-view-form-button">
