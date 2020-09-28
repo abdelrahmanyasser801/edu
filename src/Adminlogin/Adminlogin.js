@@ -59,37 +59,33 @@ export default function SignIn() {
 
 const [fruit,setFruit] = UselocalStorage("user")
 
-const [values, setValues] = useState({
-    password: '', 
-    showPassword: false,
-  });
-  
-  const handleChange = (prop) => (event) => {
-    setValues({ ...values, [prop]: event.target.value });
-  };
-  
-  const handleClickShowPassword = () => {
-    setValues({ ...values, showPassword: !values.showPassword });
-  };
+ 
   
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
+ 
   const handlelogin =(e)=>{
+    
     e.preventDefault()
     const data={
-      name:name,
+      username:name,
       password:password
     }
+    console.log(password)
+    console.log(name)
     axios.post("https://edu-up.herokuapp.com/operators/login", data)
       .then(res =>{
-        console.log(res)
-        if(res.access_token){
+        console.log(res.access_token)
+        console.log(res.access_token)
+
+        if(res.data.access_token){
           setFruit("admin")
           localStorage.setItem("token",res.access_token)
           window.location.href = "/dashboard";
         }else{
          window.alert(res.error)
+         window.alert("Eeeeeeeeeeeeeeeeeeeeeeeeeeee")
 
         }
       })
@@ -101,6 +97,8 @@ const [values, setValues] = useState({
           // that falls out of the range of 2xx
           //window.alert(error.response.status);
           //window.alert(error.response.message);
+          window.alert(err.response.data);
+
           Swal.fire({
             icon: 'error',
             title: 'Oops...',
@@ -174,20 +172,10 @@ const [values, setValues] = useState({
             autoComplete="current-password"
             className="inp"
             id="standard-adornment-password"
-            type={values.showPassword ? 'text' : 'password'}
-            value={values.password}
-            onChange={e=>setPassword(e.target.value)}
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-                >
-                  {values.showPassword ? <Visibility /> : <VisibilityOff />}
-                </IconButton>
-              </InputAdornment>
+            value={password}
+            onChange={e=>setPassword(e.target.value)
             }
+         
           />
              
            

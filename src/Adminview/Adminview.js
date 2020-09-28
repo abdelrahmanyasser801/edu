@@ -95,17 +95,13 @@ export default function Adminview(){
 
         <Grid item>
         <Button variant="contained" className="admin-view-form-button">
-جذف        </Button>
+  حذف المدرس       
+ </Button>
         </Grid>
 
         <Grid item>
         <Button variant="contained" className="admin-view-form-button">
 تعديل        </Button>
-        </Grid>
-        <Grid item>
-        <Button variant="contained" className="admin-view-form-button">
-          الطلاب
-        </Button>
         </Grid>
 
         </Grid>
