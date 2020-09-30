@@ -15,9 +15,9 @@
     border-radius:10px !important ;
 }
 .out-input1{
-    width: 350px;
+    width: 300px;
     direction: rtl;
-  
+    margin-top: 5px !important;
 }
 .inp10{
     direction: rtl !important;
