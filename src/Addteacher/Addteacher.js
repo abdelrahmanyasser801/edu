@@ -79,6 +79,7 @@ export default function Addteacher(){
       if(res.data.teacher_created){
         window.alert("succ")
         console.log("successs")
+        window.location.href = "/dashboard";
       }
     }).catch(err=>{
       console.log(err)

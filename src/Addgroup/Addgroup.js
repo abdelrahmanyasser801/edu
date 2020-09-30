@@ -60,10 +60,123 @@ export default function Addgroup(){
     }
     const handlesubmit=(e)=>{
       e.preventDefault()
-      console.log("group",groupname)
+      axios.post("https://edu-up.herokuapp.com/operators/dashboard/teachers/teacher_id/groups",data)
+      .then(res=>{
+        console.log(res.data)
+        if(res.data){
+          window.alert("succ")
+          console.log("successs")
+          window.location.href = "/";
+
+          if(res.response){
+            window.alert("succccedddddd")
+          }
+          else if(res.request){
+            window.alert(res.request);
+
+          }
+          else {
+            // Something happened in setting up the request that triggered an Error
+            window.alert('Error', res.message);
+          }
+        }
+      }).catch(err=>{
+        console.log(err)
+        if (err.response) {
+          const status =err.response.status;
+          const dta =err.response.data;
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          //window.alert(error.response.status);
+          //window.alert(error.response.message);
+  
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: status+" "+dta,
+          });        return false;
+          
+  
+        } else if (err.request) {
+          const rqst=err.request
+          // The request was made but no response was received
+          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+          // http.ClientRequest in node.js
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: rqst,
+          });        return false;
+        } else {
+          const msg=err.message
+          // Something happened in setting up the request that triggered an Error
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: msg,
+          });        return false;
+        }
+      
+      })
+    
     }
     const handleaddsubmit=(e)=>{
+      axios.post("https://edu-up.herokuapp.com/operators/dashboard/teachers/teacher_id/groups",data)
+      .then(res=>{
+        console.log(res.data)
+        if(res.data.teacher_created){
+          window.alert("succ")
+          console.log("successs")
+          if(res.response){
+            window.alert("succccedddddd")
+          }
+          else if(res.request){
+            window.alert(res.request);
+
+          }
+          else {
+            // Something happened in setting up the request that triggered an Error
+            window.alert('Error', res.message);
+          }
+        }
+      }).catch(err=>{
+        console.log(err)
+        if (err.response) {
+          const status =err.response.status;
+          const dta =err.response.data;
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          //window.alert(error.response.status);
+          //window.alert(error.response.message);
+  
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: status+" "+dta,
+          });        return false;
+          
+  
+        } else if (err.request) {
+          const rqst=err.request
+          // The request was made but no response was received
+          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+          // http.ClientRequest in node.js
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: rqst,
+          });        return false;
+        } else {
+          const msg=err.message
+          // Something happened in setting up the request that triggered an Error
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: msg,
+          });        return false;
+        }
       
+      })
     }
     return(
         <form className="add-grp" onSubmit={handlesubmit}>
@@ -103,7 +216,6 @@ export default function Addgroup(){
               <TextField className="out-input1" 
               name='grpname'
               value={grp.grpname}
-             id="outlined-basic" 
              placeholder={`اسم المجموعه ${index+1}`}
              required
              onChange={e=>handleinputchange(index,e)}
