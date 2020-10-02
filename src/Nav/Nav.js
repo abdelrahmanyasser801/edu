@@ -23,6 +23,8 @@ import EditStudent from "../EditStudent/EditStudent"
 import ShowQuestionsToAdmin from "../ShowQuestionsToAdmin/index"
 import GradesStudents from "../Grades/index"
 import AdminPage from "../AdminPage/index"
+import AddQuiz from "../AddQuiz/addQuiz"
+
 
 
 
@@ -241,6 +243,11 @@ export default function Nav() {
               <ListItemText primary="  admin " />
             </ListItem>
           </Link>
+          <Link to='/addquiz'>
+            <ListItem button>
+              <ListItemText primary="  اضافة امتحان " />
+            </ListItem>
+          </Link>
 
     </List>
         <Divider />
@@ -269,6 +276,8 @@ export default function Nav() {
           <Route  path="/show-question" component={ShowQuestionsToAdmin}/>
           <Route  path="/studentgrades" component={GradesStudents}/>
           <Route  path="/adminpage" component={AdminPage}/>
+          <Route  path="/addquiz" component={AddQuiz}/>
+
  
 
       </Switch>
