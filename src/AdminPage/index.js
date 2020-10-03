@@ -1,5 +1,16 @@
 import React from 'react';
-import './adminPage.css'
+import './adminPage.css';
+import Container from '@material-ui/core/Container';
+
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link,
+    withRouter
+  }from "react-router-dom";
+
+  
 
 const  AdminPage = () => {
     return (
@@ -9,6 +20,9 @@ const  AdminPage = () => {
                 <div className = "adminNameSection-TM"> 
                     <h2>أهلا يا عبدالرحمن اسامة</h2>
                 </div>
+
+                <Container>
+
                 <div className = "adminFunctionsSection-TM">
                     <button className = "functionButton-TM" >تسجيل طالب</button>
                     <button className = "functionButton-TM" >تسجيل مدرس</button>
@@ -18,19 +32,9 @@ const  AdminPage = () => {
                     <button className = "functionButton-TM" >الطلاب</button>
                     <button className = "functionButton-TM" >جميع الامتحانات</button>
                 </div>
+
+                </Container>
             </div>
-            <div className = "adminFunctionsSideBar-TM">
-                <button className = "functionButtonSideBar-TM" >تسجيل طالب</button>
-                <button className = "functionButtonSideBar-TM" >تسجيل مدرس</button>
-                <button className = "functionButtonSideBar-TM" >انشاء امتحان</button>
-                <button className = "functionButtonSideBar-TM">بنك الاسئلة</button>
-                <button className = "functionButtonSideBar-TM" >المدرسين </button>
-                <button className = "functionButtonSideBar-TM" >الطلاب</button>
-                <button className = "functionButtonSideBar-TM">جميع الامتحانات</button>
-            </div>
-        </div>
-        <div className = "footerContainer-TM">
-            hi
         </div>
         </div>
     )

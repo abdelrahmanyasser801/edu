@@ -1,19 +1,7 @@
 import React,{useEffect,useState} from 'react';
 
-import Home from "./Home/Home"
+
 import Nav from "./Nav/Nav.js"
-import Login from "./Login/Login"
-import Addstudent from "./Addstudent/Addstudent.js"
-import Studentview from "./Studentview/Studentview.js"
-import Adminview from "./Adminview/Adminview.js"
-import Addteacher from "./Addteacher/Addteacher.js"
-import Addquestion from "./Addquestion/Addquestion.js"
-import Quizview from "./Quizview/Quizview.js"
-import Allquiz from "./Allquiz/Allquiz.js"
-import Addgroup from "./Addgroup/Addgroup.js"
-import Studentgrade from "./Studentgrade/Studentgrade"
-import ActivationStudents from "./ActivationStudents/ActivationStudents"
-import EditStudent from "./EditStudent/EditStudent"
 
 
 // {/* ************** tareq  ********* */}

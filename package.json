@@ -11,7 +11,9 @@
     "axios": "^0.20.0",
     "materialize-css": "^1.0.0-rc.2",
     "react": "^16.13.1",
+    "react-datepicker": "^3.2.2",
     "react-dom": "^16.13.1",
+    "react-hook-form": "^6.8.6",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
     "sweetalert2": "^10.0.2"

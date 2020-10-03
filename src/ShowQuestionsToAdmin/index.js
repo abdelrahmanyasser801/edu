@@ -12,7 +12,7 @@ const ShowQuestionsToAdmin = () => {
                 </div>
             </div>
             <div className = "makingExamSection-TM">
-                <button className = "showExamButton-TM">انشاء الامتحان</button>
+                <button className = "showExamButton-TM">انشاء سؤال</button>
                 <div className = "editingQuestions-TM">
                     <div className = "questionSection-TM">
                         <div className = "editAndDeletequestionButtons-TM">
@@ -21,25 +21,11 @@ const ShowQuestionsToAdmin = () => {
                         </div>   
                         <h3 style = {{fontWeight: 'bolder', fontSize: 30, marginTop: 9, marginRight: 10}}>السؤال</h3>
                     </div>
-                    <div className = "questionSection-TM">
-                        <div className = "editAndDeletequestionButtons-TM">
-                            <button className = "editQuestionButton-TM">تعديل</button>
-                            <button className = "editQuestionButton-TM">حذف </button>
-                        </div>   
-                        <h3 style = {{fontWeight: 'bolder', fontSize: 30, marginTop: 9, marginRight: 10}}>السؤال</h3>
-                    </div>
-                    <div className = "questionSection-TM">
-                        <div className = "editAndDeletequestionButtons-TM">
-                            <button className = "editQuestionButton-TM">تعديل</button>
-                            <button className = "editQuestionButton-TM">حذف </button>
-                        </div>   
-                        <h3 style = {{fontWeight: 'bolder', fontSize: 30, marginTop: 9, marginRight: 10}}>السؤال</h3>
-                    </div>
+                 
+                  
                 </div>
             </div>
-            <div className = "footerContainerShowQuestions-TM">
-            hi
-            </div>
+            
         </div>
     )
 }

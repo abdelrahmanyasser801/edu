@@ -15,7 +15,7 @@ import Container from '@material-ui/core/Container';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
-
+import Swal from "sweetalert2"
 
 const useStyles = makeStyles((theme) => ({
 
@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignIn() {
-  const [email , setEmail] = useState('')
+  const [name , setname] = useState('')
   const [password , setPassword] = useState('')
   function UselocalStorage (localitem){
     const [loc,setState] = useState(localStorage.getItem(localitem))
@@ -56,47 +56,81 @@ export default function SignIn() {
     }
    return [loc ,setLocal];
 }   
+
 const [fruit,setFruit] = UselocalStorage("user")
 
-const [values, setValues] = useState({
-    password: '', 
-    showPassword: false,
-  });
-  
-  const handleChange = (prop) => (event) => {
-    setValues({ ...values, [prop]: event.target.value });
-  };
-  
-  const handleClickShowPassword = () => {
-    setValues({ ...values, showPassword: !values.showPassword });
-  };
+ 
   
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
+ 
   const handlelogin =(e)=>{
+    
     e.preventDefault()
     const data={
-      email:email,
+      username:name,
       password:password
     }
-    axios.post("", data)
+    console.log(password)
+    console.log(name)
+    axios.post("https://edu-up.herokuapp.com/operators/login", data)
       .then(res =>{
-        console.log(res)
-        if(res.data.token){
+        console.log(res.access_token)
+
+        if(res.data.access_token){
           setFruit("admin")
-          localStorage.setItem("token",res.data.token)
+          localStorage.setItem("token",res.access_token)
           window.location.href = "/dashboard";
         }else{
-          window.alert("error")
+         window.alert(res.error)
+         window.alert("Eeeeeeeeeeeeeeeeeeeeeeeeeeee")
+
         }
       })
       .catch(err =>{
         console.log(err)
+        if (err.response) {
+          const status =err.response.status;
+          const message ="تاكد من كلمه المرور و الايميل" 
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          //window.alert(error.response.status);
+          //window.alert(error.response.message);
+          window.alert(err.response.data);
+
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: status+" "+message,
+          });        return false;
+          
+
+        } else if (err.request) {
+          const req=err.request;
+          // The request was made but no response was received
+          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+          // http.ClientRequest in node.js
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: req,
+          });        return false;
+        } else {
+          const msg=err.message
+          // Something happened in setting up the request that triggered an Error
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: msg,
+          });        return false;        }
+      
+
       })
       
-    
-    
+      
+
+   
     }
   const classes = useStyles();
 
@@ -117,12 +151,13 @@ const [values, setValues] = useState({
 
         </FormLabel>
         <Input
+        onChange={e=>setname(e.target.value)}
             margin="normal"
             required
             fullWidth
-            id="email"
-            name="email"
-            autoComplete="email"
+            id="text"
+            name="name"
+            autoComplete="text"
             autoFocus
             className="inp"
             startAdornment={
@@ -145,20 +180,10 @@ const [values, setValues] = useState({
             autoComplete="current-password"
             className="inp"
             id="standard-adornment-password"
-            type={values.showPassword ? 'text' : 'password'}
-            value={values.password}
-            onChange={handleChange('password')}
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-                >
-                  {values.showPassword ? <Visibility /> : <VisibilityOff />}
-                </IconButton>
-              </InputAdornment>
+            value={password}
+            onChange={e=>setPassword(e.target.value)
             }
+         
           />
              
            

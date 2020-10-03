@@ -4,7 +4,6 @@ import turtle from "../turtle.jpg"
 import "./Teacherlogin.css";
 import clsx from 'clsx';
 import IconButton from '@material-ui/core/IconButton';
-import axios from "axios"
 import Avatar from '@material-ui/core/Avatar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Box from '@material-ui/core/Box';
@@ -15,8 +14,8 @@ import Container from '@material-ui/core/Container';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
-
-
+import axios from "axios"
+import Swal from "sweetalert2"
 
 const useStyles = makeStyles((theme) => ({
 
@@ -80,21 +79,64 @@ const [fruit,setFruit] = UselocalStorage("user")
       email:email,
       password:password
     }
-    axios.post("", data)
+    axios.post("https://edu-up.herokuapp.com/teachers/login", data)
       .then(res =>{
         console.log(res)
-        if(res.data==="success"){
+        if(res.access_token){
           setFruit("teacher")
-          localStorage.setItem("token",res.data.token)
+          localStorage.setItem("token",res.access_token)
+          Swal.fire({
+            icon: 'success',
+            title: 'تم الدخول بنجاح',
+            showConfirmButton: true,
+          })
           window.location.href = "/dashboard";
+        }else{
+         window.alert(res.error)
+
         }
       })
       .catch(err =>{
         console.log(err)
+        if (err.response) {
+          const status =err.response.status;
+          const message ="تاكد من كلمه المرور و الايميل"
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          //window.alert(error.response.status);
+          //window.alert(error.response.message);
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: status+" "+message,
+          });        return false;
+          
+
+        } else if (err.request) {
+          const req=err.request;
+          // The request was made but no response was received
+          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+          // http.ClientRequest in node.js
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: req,
+          });        return false;
+        } else {
+          const msg =err.message
+          // Something happened in setting up the request that triggered an Error
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: msg,
+          });        return false;        }
+      
+
       })
       
-    
-    
+      
+
+   
     }
   const classes = useStyles();
 
@@ -115,6 +157,7 @@ const [fruit,setFruit] = UselocalStorage("user")
 
         </FormLabel>
         <Input
+        onChange={e=>setEmail(e.target.value)}
             margin="normal"
             required
             fullWidth
@@ -145,7 +188,7 @@ const [fruit,setFruit] = UselocalStorage("user")
             id="standard-adornment-password"
             type={values.showPassword ? 'text' : 'password'}
             value={values.password}
-            onChange={handleChange('password')}
+            onChange={e=>setPassword(e.target.value)}
             endAdornment={
               <InputAdornment position="end">
                 <IconButton

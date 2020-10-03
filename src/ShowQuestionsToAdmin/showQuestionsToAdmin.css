@@ -1,8 +1,3 @@
-body {
-    background-color: rgb(210, 230, 230);
-    font-family: sans-serif;
-    height: 100;
-}
 
 
 .headerContainer-TM{
@@ -10,6 +5,7 @@ body {
     flex-direction: column;
     justify-content: flex-end;
     margin-right: 15rem;
+    margin-top: 80px;
 }
 
 .headSection-TM{
@@ -85,7 +81,7 @@ body {
 }
 
 .editAndDeletequestionButtons-TM{
-    margin-top: 1.2rem;
+    margin-top: 0.6rem;
 }
 
 

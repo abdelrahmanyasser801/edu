@@ -15,39 +15,62 @@ const useStyles = makeStyles({
     }
   });
 export default function Adminview(){
+  useEffect (()=>{
+    axios.get("https://edu-up.herokuapp.com/operators/dashboard/all_teachers")
+    .then(res=>{
+      console.log(res.data)
+      setallteachers(res.data.teachers)
   
+    })
+    .catch(err=>{
+      console.log(err)
+    })
+  },[])
   
     const classes = useStyles();
 
     const [admin ,setAdmin] = useState("اسم الادمن");
     const [imgplaceholder , setImgplaceholder] = useState(placeholder)
-    const [teachers ,setteacher] = useState([]);
-
-    useEffect(()=>{
-
-      axios.get("https://edu-up.herokuapp.com/operators/dashboard/all_teachers")
+    const [allteachers ,setallteachers] = useState([]);
+    const [teacherid ,setid] = useState('');
+    const edit =()=>
+    {
+      window.location.href = "/editteacher";
+    }
+   const deleteteacher =(id,e)=>
+   {
+     
+       axios.delete(`https://edu-up.herokuapp.com/operators/dashboard/teachers/${id}`)
       .then(res=>{
-        setteacher(res.data)
-        console.log(res)
+        console.log(res.data)
+        const newteachers = allteachers.filter(item => item.id !== id);
+        setallteachers(newteachers);
+       
       })
       .catch(err=>{
         console.log(err)
       })
-    },[])
+       
+    console.log(id)
+ 
+  }
+
     return(
         
         <div className="admin-view-form">
             <p className="admin-name">اهلا يا {admin} </p>
 
-{teachers.map(teacher=>{
+{allteachers.map((teacher,index)=>{
     return(
-<Grid container key={teacher.id}
-        direction="row"
+<Grid container key={index} 
+        id={teacher.id}
         justify="center"
         alignItems="center"
         spacing={2}
         >
-            <Grid item>
+            <Grid item
+        
+            >
             <Card className={classes.root}>
       <CardActionArea>
       
@@ -55,7 +78,8 @@ export default function Adminview(){
           component="img"
           alt="img"
          
-          image={imgplaceholder}
+          image={teacher.image_url?setImgplaceholder(teacher.image_url):
+            imgplaceholder}
           title="img"
           className="cover-img"
         /> 
@@ -66,6 +90,7 @@ export default function Adminview(){
           <Typography className={classes.text} variant="h5" align="center"  component="p">
             {teacher.mobile}
           </Typography>
+          
         </CardContent>
       </CardActionArea>
       <CardActions>
@@ -74,7 +99,7 @@ export default function Adminview(){
         direction="row"
         justify="center"
         alignItems="center"
-        spacing ={5}
+        spacing ={1}
         >
           <Grid item>
         <Button variant="contained" className="admin-view-form-button">
@@ -83,8 +108,31 @@ export default function Adminview(){
         </Grid>
         <Grid item>
         <Button variant="contained" className="admin-view-form-button">
-          الطلاب
+          حذف الطالب
         </Button>
+        </Grid>
+        <Grid item>
+        <Button variant="contained" className="admin-view-form-button">
+        اضافه طالب
+        </Button>
+        </Grid>
+
+        <Grid item>
+        <Button variant="contained"
+         className="admin-view-form-button"
+         onClick={e=>deleteteacher(teacher.id, e)}
+
+         >
+        حذف المدرس        
+      </Button>
+        </Grid>
+
+        <Grid item>
+        <Button variant="contained" 
+        className="admin-view-form-button"
+        onClick={edit}
+        >
+تعديل        </Button>
         </Grid>
 
         </Grid>

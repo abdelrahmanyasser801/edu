@@ -1,11 +1,8 @@
-body{
-    background-color: rgb(232, 248, 252);
-}
 
 .teacherName__Section__TM{
     margin-left: 33rem;
     font-weight: bolder;
-    margin-top: 3rem;
+    margin-top: 80px;
     font-size: 130%;
     border: 3px solid rgb(172, 27, 177);
     text-align: center;

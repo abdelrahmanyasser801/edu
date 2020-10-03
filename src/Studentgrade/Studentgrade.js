@@ -16,7 +16,7 @@ export default class Studentgrade extends Component {
 
                 <Container className="student-grade-cont-os">
 
-                        <Container className="label" style={{color:"white",background:"green",maxWidth:"30%", textAlign:"center", height:"30px", marginBottom:"20px", borderRadius:"10px" }}>
+                        <Container className="label-os" style={{color:"white",background:"green",maxWidth:"30%", textAlign:"center", height:"30px", marginBottom:"20px", borderRadius:"10px" }}>
                             <h3 className="cont-h3"  >الطلاب</h3>
                         </Container>
 
@@ -44,7 +44,7 @@ export default class Studentgrade extends Component {
                            </select>
                        </Container>
 
-                       <input  type="text"   name="studentname" placeholder="ابحث  عن الطالب" />
+                       <input  className="input-os" type="text"   name="studentname" placeholder="ابحث  عن الطالب" />
                        <button className="btn-os" >ابحث</button>
 
                </Container>
