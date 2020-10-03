@@ -30,8 +30,6 @@ import AddQuiz from "../AddQuiz/addQuiz"
 
 
 
-// {/* ************** tareq  ********* */}
-import ShowQuestionsToAdmin from "../ShowQuestionsToAdmin/index"
 
 
 import clsx from 'clsx';
@@ -237,11 +235,7 @@ export default function Nav() {
               <ListItemText primary="edit" />
             </ListItem>
           </Link>
-          <Link to='/show-question'>
-            <ListItem button>
-              <ListItemText primary="show-question" />
-            </ListItem>
-          </Link>
+          
           <Link to='/studentgrades'>
             <ListItem button>
               <ListItemText primary="studentgrades" />
@@ -254,30 +248,7 @@ export default function Nav() {
           </Link>
 
 
-
-          <Link to='/grades'>
-            <ListItem button>
-              <ListItemText primary="grades" />
-            </ListItem>
-          </Link>
-
-          <Link to='/active'>
-            <ListItem button>
-              <ListItemText primary=" active " />
-            </ListItem>
-          </Link>
-
-          <Link to='/edit'>
-            <ListItem button>
-              <ListItemText primary=" edit " />
-            </ListItem>
-          </Link>
-
-          <Link to='/show-question'>
-            <ListItem button>
-              <ListItemText primary="  show quest" />
-            </ListItem>
-          </Link>
+         
 
           <Link to='/studentgrades'>
             <ListItem button>
@@ -322,7 +293,6 @@ export default function Nav() {
           <Route  path="/grades" component={Studentgrade}/>
           <Route  path="/active" component={ActivationStudents}/>
           <Route  path="/edit" component={EditStudent}/>
-          <Route  path="/show-question" component={ShowQuestionsToAdmin}/>
           <Route  path="/studentgrades" component={GradesStudents}/>
           <Route  path="/adminpage" component={AdminPage}/>
           <Route  path="/addquiz" component={AddQuiz}/>

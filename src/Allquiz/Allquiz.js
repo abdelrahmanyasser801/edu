@@ -16,7 +16,11 @@ export default function Allquiz(){
     return(
         <div className="all-quiz">
             <h2>جميع الامتحانات</h2>
-            <Button variant="contained" className="all-quiz-btn"> انشاء امتحان</Button>
+
+            <Link to='/addquiz'>
+                <Button variant="contained" className="all-quiz-btn"> انشاء امتحان</Button>
+            </Link>
+
            
 
             

@@ -2,7 +2,9 @@
 import React ,{useState} from "react"
 import {Grid  ,Select ,FormControl ,FormHelperText ,MenuItem ,InputLabel,Button , IconButton ,TextField } from '@material-ui/core/';
 import "./addQuiz.css"
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles,useTheme } from '@material-ui/core/styles';
+import Input from '@material-ui/core/Input';
+import Chip from '@material-ui/core/Chip';
 
 
     const useStyles = makeStyles((theme) => ({
@@ -15,33 +17,76 @@ import { makeStyles } from '@material-ui/core/styles';
           marginRight: theme.spacing(1),
           width: 200,
         },
+        formControl: {
+          margin: theme.spacing(1),
+          minWidth: 120,
+          maxWidth: 300,
+        },
+        chips: {
+          display: 'flex',
+          flexWrap: 'wrap',
+        },
+        chip: {
+          margin: 2,
+        },
+        noLabel: {
+          marginTop: theme.spacing(3),
+        },
       }));
+      const ITEM_HEIGHT = 48;
+      const ITEM_PADDING_TOP = 8;
+      const MenuProps = {
+        PaperProps: {
+          style: {
+            maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+            width: 250,
+       },
+  },
+};
+
+
+      const groupData  = [
+      1,2,3
+    
+      ];
+
+
+      function getStyles(groupp, group, theme) {
+        return {
+          fontWeight:
+            group.indexOf(groupp) === -1
+              ? theme.typography.fontWeightRegular
+              : theme.typography.fontWeightMedium,
+        };
+      }
+
 export default function AddQuiz(){
 
-  const [year,setYear] = useState('')
-  const [end,setEnd] = useState('')
-  const [start,setStart] = useState('')
+  const [year_id,setYear] = useState()
+  const [group,setGroup] = useState([])
+  const [subject_id,setSubject]=useState('');
+  const [teacher_id,setTeacher]=useState('');
+  const theme = useTheme();
 
 
 
-    const [dataQuestion,setDataQuestion] = useState({
-      question_head:'',
-      grade:'',
-      correct_answer:'',
-      answer1:'',
-      answer2:'',
-      answer3:'', 
+    const [dataExam,setDataExam] = useState({
+      title:'',
+      total_time:'',
+      start_date:'',
+      end_date:'',
     });
 
-    const [subject_id,setSubject]=useState('');
   
 
 
         const handleChangeData = (e) => {
-          setDataQuestion({
-             ...dataQuestion
+          setDataExam({
+             ...dataExam
              ,[e.target.name]: e.target.value });
         };
+
+
         const handleChangeSubject = (e) => {
           setSubject(e.target.value) 
              ;
@@ -50,22 +95,27 @@ export default function AddQuiz(){
           setYear(e.target.value) 
              ;
         };
-        const handleChangeEndTime = (e) => {
-            setEnd(e.target.value);
-            console.log(e.target.value)
+       
+        const handleChangeTeacher = (e) => {
+          setTeacher(e.target.value);
+        };
+        const handleChangeMultipleGroup = (event) => {
+          setGroup(event.target.value);
+        };
+          // const handleChangeTotalTime = (e) => {
+          //   const dataTemp = {...dataExam};
+          //   const totalTime= {total_time:e.target.value};
+          //   dataTemp={...dataTemp,...totalTime}
+          //   setDataExam(dataTemp)
 
-          };
-          const handleChangeStartTime = (e) => {
-            setStart(e.target.value);
-            console.log(e.target.value)
-               ;
-          };
+          //      ;
+          // };
         
         
 
         const handleSubmit =(e)=>{
           e.preventDefault();
-          console.log(dataQuestion , subject_id)
+          console.log(dataExam)
 
         };
 
@@ -81,7 +131,31 @@ export default function AddQuiz(){
         },
         floatingLabelFocusStyle: {
             color: "green"
-        }
+        },
+        container: {
+          display: 'flex',
+          flexWrap: 'wrap',
+        },
+        textField: {
+          marginLeft: theme.spacing(1),
+          marginRight: theme.spacing(1),
+          width: 200,
+        },
+        formControl: {
+          margin: theme.spacing(1),
+          minWidth: 120,
+          maxWidth: 300,
+        },
+        chips: {
+          display: 'flex',
+          flexWrap: 'wrap',
+        },
+        chip: {
+          margin: 2,
+        },
+        noLabel: {
+          marginTop: theme.spacing(3),
+        },
       }));
       const classes = useStyles();
 
@@ -105,9 +179,9 @@ export default function AddQuiz(){
                       <Select
                         labelId="demo-simple-select-outlined-label"
                         id="demo-simple-select-outlined"
-                        value={subject_id}
                         onChange={handleChangeSubject}
                         label="المادة"
+                        value={subject_id}
                       >
                           <MenuItem value={'bio'}>أحياء</MenuItem>
                           <MenuItem value={'chem'}>كيمياء</MenuItem>
@@ -122,13 +196,13 @@ export default function AddQuiz(){
                       <Select
                         labelId="demo-simple-select-outlined-label"
                         id="demo-simple-select-outlined"
-                        value={subject_id}
                         onChange={handleChangeYear}
                         label="السنة الدراسية"
+                        value={year_id}
                       >
-                          <MenuItem value={'bio'}>الاةل</MenuItem>
-                          <MenuItem value={'chem'}>الثاني</MenuItem>
-                          <MenuItem value={'phy'}>الثالث</MenuItem>
+                          <MenuItem value={1}>الاول</MenuItem>
+                          <MenuItem value={2}>الثاني</MenuItem>
+                          <MenuItem value={3}>الثالث</MenuItem>
                       </Select>
                    </FormControl>
                 </Grid>
@@ -139,7 +213,7 @@ export default function AddQuiz(){
 
               <Grid item xs={12}>
               <InputLabel className="inp1"> عنوان الامتحان</InputLabel>
-              <TextField   id="outlined-basic"  placeholder="العنوان " name="question_head" value={dataQuestion.question_head}  onChange={handleChangeData} required/>
+              <TextField   id="outlined-basic"  placeholder="العنوان " name="title" value={dataExam.title}  onChange={handleChangeData} required/>
               </Grid>
 
               <Grid item xs={12}>
@@ -148,19 +222,44 @@ export default function AddQuiz(){
                       <Select
                         labelId="demo-simple-select-outlined-label"
                         id="demo-simple-select-outlined"
-                        value={subject_id}
-                        onChange={handleChangeYear}
                         label=" المدرس"
+                        value={teacher_id}
+                        onChange={handleChangeTeacher}
                       >
-                          <MenuItem value={''}>حسن</MenuItem>
-                          <MenuItem value={''}>حسين</MenuItem>
-                          <MenuItem value={''}>حسانين</MenuItem>
+                          <MenuItem value={'1'}>حسن</MenuItem>
+                          <MenuItem value={'2'}>حسين</MenuItem>
+                          <MenuItem value={'3'}>حسانين</MenuItem>
                       </Select>
                    </FormControl>
                 </Grid>
 
                 <Grid item xs={12}>
-                <FormControl variant="outlined">
+                          <FormControl className={classes.formControl}>
+                          <InputLabel id="demo-mutiple-chip-label">المجموعة</InputLabel>
+                          <Select
+                            labelId="demo-mutiple-chip-label"
+                            id="demo-mutiple-chip"
+                            multiple
+                            value={group}
+                            onChange={handleChangeMultipleGroup}
+                            input={<Input id="select-multiple-chip" />}
+                            renderValue={(selected) => (
+                              <div className={classes.chips}>
+                                {selected.map((value) => (
+                                  <Chip key={value} label={value} className={classes.chip} />
+                                ))}
+                              </div>
+                            )}
+                            MenuProps={MenuProps}
+                          >
+                            {groupData.map((groupp) => (
+                              <MenuItem key={groupp} value={groupp} style={getStyles(groupp, group, theme)}>
+                                {groupp}
+                              </MenuItem>
+                            ))}
+                          </Select>
+                </FormControl>
+                {/* <FormControl variant="outlined">
                       <InputLabel id="demo-simple-select-outlined-label"> المجموعة</InputLabel>
                       <Select
                         labelId="demo-simple-select-outlined-label"
@@ -173,7 +272,7 @@ export default function AddQuiz(){
                           <MenuItem value={''}>2</MenuItem>
                           <MenuItem value={''}>3</MenuItem>
                       </Select>
-                   </FormControl>
+                   </FormControl> */}
                 </Grid>
 
 
@@ -190,8 +289,9 @@ export default function AddQuiz(){
                             InputLabelProps={{
                             shrink: true,
                             }}
-                            onChange={handleChangeStartTime}
-                            value={start}
+                            onChange={handleChangeData}
+                            value={dataExam.start_date}
+                            name="start_date"
                         />
                     </form>
 
@@ -209,14 +309,18 @@ export default function AddQuiz(){
                             InputLabelProps={{
                             shrink: true,
                             }}
-                            onChange={handleChangeEndTime}
-                            value={end}
+                            onChange={handleChangeData}
+                            value={dataExam.end_date}
+                            name="end_date"
                         />
                     </form>
 
                 </Grid>
 
-   
+                <Grid item xs={12}>
+              <InputLabel className="inp1">  مدة الامتحان</InputLabel>
+              <TextField   type="number" id="outlined-basic"  placeholder="المدة " name="total_time"  value={dataExam.total_time}  onChange={handleChangeData} required/>
+              </Grid>
 
 
                   
