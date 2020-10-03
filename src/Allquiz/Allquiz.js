@@ -34,14 +34,19 @@ export default function Allquiz(){
                 <Grid item xs={2}>
                 <Button variant="contained" className="quiz-btn">عرض</Button>
                 </Grid>
+                
                 <Grid item xs={2}>
                 <Button variant="contained" className="quiz-btn">حذف</Button>
                 </Grid>
-                <Grid item xs={2}>
-                <Button variant="contained" className="quiz-btn">تعديل</Button>
-                </Grid>
+
                 <Grid item xs={2}>
                 <Link to='/addquestion'>
+                    <Button variant="contained" className="quiz-btn">تعديل</Button>   
+                </Link>
+                </Grid>
+
+                <Grid item xs={2}>
+                <Link to='/active'>
                     <Button variant="contained" className="quiz-btn" style={{textDecoration:'none'}} >اضافة</Button>
                 </Link>     
                 </Grid>
