@@ -77,7 +77,6 @@ const [fruit,setFruit] = UselocalStorage("user")
     axios.post("https://edu-up.herokuapp.com/operators/login", data)
       .then(res =>{
         console.log(res.access_token)
-        console.log(res.access_token)
 
         if(res.data.access_token){
           setFruit("admin")
@@ -93,6 +92,7 @@ const [fruit,setFruit] = UselocalStorage("user")
         console.log(err)
         if (err.response) {
           const status =err.response.status;
+          const message ="تاكد من كلمه المرور و الايميل" 
           // The request was made and the server responded with a status code
           // that falls out of the range of 2xx
           //window.alert(error.response.status);
@@ -102,20 +102,28 @@ const [fruit,setFruit] = UselocalStorage("user")
           Swal.fire({
             icon: 'error',
             title: 'Oops...',
-            text: status,
+            text: status+" "+message,
           });        return false;
           
 
         } else if (err.request) {
+          const req=err.request;
           // The request was made but no response was received
           // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
           // http.ClientRequest in node.js
-          window.alert(err.request);
-
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: req,
+          });        return false;
         } else {
+          const msg=err.message
           // Something happened in setting up the request that triggered an Error
-          window.alert('Error', err.message);
-        }
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: msg,
+          });        return false;        }
       
 
       })

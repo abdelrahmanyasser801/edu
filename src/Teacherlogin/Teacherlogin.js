@@ -4,7 +4,6 @@ import turtle from "../turtle.jpg"
 import "./Teacherlogin.css";
 import clsx from 'clsx';
 import IconButton from '@material-ui/core/IconButton';
-
 import Avatar from '@material-ui/core/Avatar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Box from '@material-ui/core/Box';
@@ -17,7 +16,6 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import axios from "axios"
 import Swal from "sweetalert2"
-
 
 const useStyles = makeStyles((theme) => ({
 
@@ -87,6 +85,11 @@ const [fruit,setFruit] = UselocalStorage("user")
         if(res.access_token){
           setFruit("teacher")
           localStorage.setItem("token",res.access_token)
+          Swal.fire({
+            icon: 'success',
+            title: 'تم الدخول بنجاح',
+            showConfirmButton: true,
+          })
           window.location.href = "/dashboard";
         }else{
          window.alert(res.error)
@@ -110,15 +113,23 @@ const [fruit,setFruit] = UselocalStorage("user")
           
 
         } else if (err.request) {
+          const req=err.request;
           // The request was made but no response was received
           // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
           // http.ClientRequest in node.js
-          window.alert(err.request);
-
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: req,
+          });        return false;
         } else {
+          const msg =err.message
           // Something happened in setting up the request that triggered an Error
-          window.alert('Error', err.message);
-        }
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: msg,
+          });        return false;        }
       
 
       })

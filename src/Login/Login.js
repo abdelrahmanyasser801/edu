@@ -64,13 +64,6 @@ const [fruit,setFruit] = UselocalStorage("user")
   });
   
   
-  const handleClickShowPassword = () => {
-    setValues({ ...values, showPassword: !values.showPassword });
-  };
-  
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
   const handlelogin =(e)=>{
     e.preventDefault()
     const data={
@@ -83,6 +76,11 @@ const [fruit,setFruit] = UselocalStorage("user")
         if(res.access_token){
           setFruit("std")
           localStorage.setItem("token",res.access_token)
+          Swal.fire({
+            icon: 'success',
+            title: 'تم الدخول بنجاح',
+            showConfirmButton: true,
+          })
           window.location.href = "/dashboard";
         }else{
          window.alert(res.error)
@@ -106,14 +104,28 @@ const [fruit,setFruit] = UselocalStorage("user")
           
 
         } else if (err.request) {
+          const req = err.request
           // The request was made but no response was received
           // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
           // http.ClientRequest in node.js
-          window.alert(err.request);
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: req,
+          });        return false;
+          
+
 
         } else {
+          const msg = err.message
           // Something happened in setting up the request that triggered an Error
-          window.alert('Error', err.message);
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: msg,
+          });        return false;
+          
+
         }
       
 
@@ -174,20 +186,9 @@ const [fruit,setFruit] = UselocalStorage("user")
             autoComplete="current-password"
             className="inp"
             id="standard-adornment-password"
-            type={values.showPassword ? 'text' : 'password'}
-            value={password}
+            type='password'
             onChange={e =>setPassword(e.target.value)}
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-                >
-                  {values.showPassword ? <Visibility /> : <VisibilityOff />}
-                </IconButton>
-              </InputAdornment>
-            }
+           
           />
              
            

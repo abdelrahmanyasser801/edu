@@ -1,4 +1,4 @@
-import React ,{useState} from "react"
+import React ,{useState ,useEffect} from "react"
 import {Grid  ,Select ,FormControl ,FormHelperText ,MenuItem ,InputLabel,Button , IconButton ,TextField } from '@material-ui/core/';
 import "./Addquestion.css"
 import { makeStyles } from '@material-ui/core/styles';
@@ -46,7 +46,11 @@ export default function  Addquestion(){
         },
         floatingLabelFocusStyle: {
             color: "green"
-        }
+        },
+        inputfi:{
+            marginBottom:15
+        },
+        
       }));
       const classes = useStyles();
 
@@ -124,13 +128,11 @@ export default function  Addquestion(){
                 </Grid>
 
 
-                    </Grid>
 
 
 
 
-                    <Grid>
-                        </Grid>
+                         <Grid />
                   <Grid container xs={12}
                         direction="column"
                         justify="center"
@@ -154,8 +156,8 @@ export default function  Addquestion(){
                         <TextField  id="outlined-basic"  placeholder="الاجابه رقم 1"  name="answer1" value={dataQuestion.answer1} onChange={handleChangeData}  required/>
                     </Grid>
                  </Grid>
-                 <Grid>
-                        </Grid>
+                        <Grid />
+                      
                   <Grid container xs={12}
                         direction="column"
                         justify="center"
@@ -179,8 +181,8 @@ export default function  Addquestion(){
                         <TextField  id="outlined-basic"  placeholder="الاجابه رقم 2"  name="answer2" value={dataQuestion.answer2} onChange={handleChangeData}  required/>
                     </Grid>
                  </Grid>
-                 <Grid>
-                        </Grid>
+                        <Grid />
+              
                   <Grid container xs={12}
                         direction="column"
                         justify="center"
@@ -213,11 +215,18 @@ export default function  Addquestion(){
             <div className="buttons-div" 
                 style={{display:'flex'}}
             >
-                    <Button type="submit" className="add-button" variant="contained" onClick={handleSubmit} >انشاء</Button>
+                    <Button type="submit" className="add-button"
+                     variant="contained" 
+                     onClick={handleSubmit} >انشاء</Button>
 
-                    <Button type="submit" className="add-button" variant="contained">انشاء و اضافه</Button>
+                    <Button>
+                    انشاء و اضافه
+                    </Button>
+
                 </div>
+                </Grid>
             </form>
-        </div>
+        
+       </div>
     )
 }

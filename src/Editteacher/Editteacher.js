@@ -1,12 +1,12 @@
 import React ,{useState,useEffect}from "react"
-import "./Addteacher.css"
+import "./Editteacher.css"
 import {Grid, Input ,InputAdornment , Select ,FormControl ,FormHelperText ,MenuItem ,InputLabel,Button , IconButton ,TextField } from '@material-ui/core/';
 import { makeStyles } from '@material-ui/core/styles';
 import Swal from "sweetalert2"
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import axios from "axios"
-export default function Addteacher(){
+export default function Editteacher(){
   useEffect (()=>{
     axios.get("https://edu-up.herokuapp.com/operators/dashboard/teachers")
     .then(res=>{
@@ -73,7 +73,8 @@ export default function Addteacher(){
     const phonenumber = (e) =>
 {
     e.preventDefault()
-    axios.post("https://edu-up.herokuapp.com/operators/dashboard/teachers",data)
+    axios.put("https://edu-up.herokuapp.com/operators/dashboard/teachers/teacher_id/",data)
+    
     .then(res=>{
       console.log(res.data)
       if(res.data.teacher_created){
@@ -85,36 +86,29 @@ export default function Addteacher(){
       console.log(err)
       if (err.response) {
         const status =err.response.status;
-        const dta=err.response.data
         // The request was made and the server responded with a status code
         // that falls out of the range of 2xx
         //window.alert(error.response.status);
         //window.alert(error.response.message);
+        window.alert(err.response.data);
+
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
-          text: status+" "+dta,
+          text: status,
         });        return false;
         
 
       } else if (err.request) {
-        const req = err.request;
         // The request was made but no response was received
         // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
         // http.ClientRequest in node.js
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: req,
-        });        return false;
+        window.alert(err.request);
+
       } else {
-        const msg=err.message
         // Something happened in setting up the request that triggered an Error
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: msg,
-        });        return false;      }
+        window.alert('Error', err.message);
+      }
     
     })   
     console.log(currentsub)
@@ -140,7 +134,7 @@ export default function Addteacher(){
         <form onSubmit={phonenumber}>
 
         <div className="teacher-form">
-            <h1 className="student-title">تسجيل المدرس</h1>
+            <h1 className="student-title">تعديل المدرس</h1>
             <div>
             <Grid container spacing={3} 
             direction="column"

@@ -1,4 +1,4 @@
-import React ,{useState} from "react"
+import React ,{useState, useEffect} from "react"
 import "./Studentview.css"
 import {Grid,Card,CardActionArea ,CardActions ,CardContent ,CardMedia ,Button,Typography  } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
@@ -6,6 +6,7 @@ import placeholder from "./placeholder.jpg"
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
+import axios from "axios"
 const useStyles = makeStyles((theme) => ({
   modal: {
     display: 'flex',
@@ -50,6 +51,20 @@ const useStyles = makeStyles((theme) => ({
 
     const [student ,setStudent] = useState("اسم الطالب");
     const [imgplaceholder , setImgplaceholder] = useState(placeholder)
+
+    useEffect(()=>{
+      const config ={
+        headers:{
+          Authorization : "Bearer " + localStorage.getItem('token')
+        }
+      }
+      axios.get("",config)
+        .then(res=>{
+          console.log(res)
+        }).catch(err=>{
+          console.log(err)
+        })
+    })
     return(
         
         <div className="view-form">

@@ -15,12 +15,12 @@ import Adminview from "../Adminview/Adminview"
 import Allquiz from "../Allquiz/Allquiz"
 import Quizview from "../Quizview/Quizview"
 import Studentview from "../Studentview/Studentview"
+import Editteacher from "../Editteacher/Editteacher"
 
 // {/* ************** oss  ********* */}
 import Studentgrade from "../Studentgrade/Studentgrade"
 import ActivationStudents from "../ActivationStudents/ActivationStudents"
 import EditStudent from "../EditStudent/EditStudent"
-import ShowQuestionsToAdmin from "../ShowQuestionsToAdmin/index"
 import GradesStudents from "../Grades/index"
 import AdminPage from "../AdminPage/index"
 import AddQuiz from "../AddQuiz/addQuiz"
@@ -28,6 +28,10 @@ import AddQuiz from "../AddQuiz/addQuiz"
 
 
 
+
+
+// {/* ************** tareq  ********* */}
+import ShowQuestionsToAdmin from "../ShowQuestionsToAdmin/index"
 
 
 import clsx from 'clsx';
@@ -133,6 +137,16 @@ export default function Nav() {
           </IconButton>
         </div>
         <Divider />
+        {localStorage.getItem("user")==="std"?
+        <List>
+            
+        <Link to='/'>
+          <ListItem button>
+            <ListItemText primary="logout" onClick={e=> localStorage.clear()} />
+          </ListItem>
+        </Link> 
+        </List> 
+      :
         <List>
             
           <Link to='/home'>
@@ -205,6 +219,39 @@ export default function Nav() {
               <ListItemText primary="تسجيل دخول ادمن" />
             </ListItem>
           </Link>
+        {/**osos */}
+        <Link to='/grades'>
+            <ListItem button>
+              <ListItemText primary="grades" />
+            </ListItem>
+          </Link>
+
+          <Link to='/active'>
+            <ListItem button>
+              <ListItemText primary="active" />
+            </ListItem>
+          </Link>
+
+          <Link to='/edit'>
+            <ListItem button>
+              <ListItemText primary="edit" />
+            </ListItem>
+          </Link>
+          <Link to='/show-question'>
+            <ListItem button>
+              <ListItemText primary="show-question" />
+            </ListItem>
+          </Link>
+          <Link to='/studentgrades'>
+            <ListItem button>
+              <ListItemText primary="studentgrades" />
+            </ListItem>
+          </Link>
+          <Link to='/adminpage'>
+            <ListItem button>
+              <ListItemText primary="adminpage" />
+            </ListItem>
+          </Link>
 
 
 
@@ -250,6 +297,7 @@ export default function Nav() {
           </Link>
 
     </List>
+    }
         <Divider />
         
       </Drawer>
@@ -268,6 +316,7 @@ export default function Nav() {
           <Route exact path="/adminlogin" component={withRouter(Adminlogin)}/>
           <Route exact path="/teacherlogin" component={withRouter(Teacherlogin)}/>
           <Route exact path="/dashboard" component={withRouter(Dashboard)}/>
+          <Route exact path="/editteacher" component={withRouter(Editteacher)}/>
 
              {/* ************** oss  ********* */}
           <Route  path="/grades" component={Studentgrade}/>

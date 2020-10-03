@@ -20,6 +20,7 @@ export default function Adminview(){
     .then(res=>{
       console.log(res.data)
       setallteachers(res.data.teachers)
+  
     })
     .catch(err=>{
       console.log(err)
@@ -31,16 +32,38 @@ export default function Adminview(){
     const [admin ,setAdmin] = useState("اسم الادمن");
     const [imgplaceholder , setImgplaceholder] = useState(placeholder)
     const [allteachers ,setallteachers] = useState([]);
+    const [teacherid ,setid] = useState('');
+    const edit =()=>
+    {
+      window.location.href = "/editteacher";
+    }
+   const deleteteacher =(id,e)=>
+   {
+     
+       axios.delete(`https://edu-up.herokuapp.com/operators/dashboard/teachers/${id}`)
+      .then(res=>{
+        console.log(res.data)
+        const newteachers = allteachers.filter(item => item.id !== id);
+        setallteachers(newteachers);
+       
+      })
+      .catch(err=>{
+        console.log(err)
+      })
+       
+    console.log(id)
+ 
+  }
 
-   
     return(
         
         <div className="admin-view-form">
             <p className="admin-name">اهلا يا {admin} </p>
 
-{allteachers.map(teacher=>{
+{allteachers.map((teacher,index)=>{
     return(
-<Grid container key={teacher.id} 
+<Grid container key={index} 
+        id={teacher.id}
         justify="center"
         alignItems="center"
         spacing={2}
@@ -67,6 +90,7 @@ export default function Adminview(){
           <Typography className={classes.text} variant="h5" align="center"  component="p">
             {teacher.mobile}
           </Typography>
+          
         </CardContent>
       </CardActionArea>
       <CardActions>
@@ -94,13 +118,20 @@ export default function Adminview(){
         </Grid>
 
         <Grid item>
-        <Button variant="contained" className="admin-view-form-button">
-  حذف المدرس       
- </Button>
+        <Button variant="contained"
+         className="admin-view-form-button"
+         onClick={e=>deleteteacher(teacher.id, e)}
+
+         >
+        حذف المدرس        
+      </Button>
         </Grid>
 
         <Grid item>
-        <Button variant="contained" className="admin-view-form-button">
+        <Button variant="contained" 
+        className="admin-view-form-button"
+        onClick={edit}
+        >
 تعديل        </Button>
         </Grid>
 
