@@ -1,0 +1,41 @@
+.all-quiz{
+    margin-top: 100px;
+}
+
+.all-quiz h2{
+    border: 3px solid black;
+    height: 55px;
+    width: 50%;
+    margin: 15px auto;
+    padding-top: 15px;
+}
+.all-quiz-btn{
+    background-color: rgb(158, 79, 144) !important;
+    border-radius: 10px !important;
+    color: white !important;
+    position: relative;
+    bottom: 65px !important;
+}
+
+.father-grid{
+    background-color: rgb(154, 174, 173) !important;
+    padding: 10px !important;
+}
+.quiz-btn{
+    background-color: rgb(158, 79, 144) !important;
+    color: white !important;
+    margin-right: 5px !important;
+    border-radius: 10px !important;
+    font-size: 15px !important;
+    font-weight: bold !important;
+
+    
+}
+.father-grid p{
+    direction: rtl;
+}
+.breaker{
+    width: 100%;
+    height: 2px;
+    background-color: white;
+}

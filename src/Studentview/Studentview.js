@@ -100,7 +100,7 @@ const useStyles = makeStyles((theme) => ({
             
             <CardContent>
               <Typography gutterBottom variant="h3" component="h2">
-              {student.fname} {student.lname}
+              {student.username}
               </Typography>
               <Typography className={classes.text} variant="h5" align="center"  component="p">
              {<p>عدد الامتحانات :{student.exams_num}</p>}
