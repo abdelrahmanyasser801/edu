@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignIn() {
-  const [email , setEmail] = useState('')
+  const [username , setUsername] = useState('')
   const [password , setPassword] = useState('')
   function UselocalStorage (localitem){
     const [loc,setState] = useState(localStorage.getItem(localitem))
@@ -57,43 +57,36 @@ export default function SignIn() {
    return [loc ,setLocal];
 }   
 const [fruit,setFruit] = UselocalStorage("user")
-  const [values, setValues] = useState({
-    password: '', 
-    showPassword: false,
-  });
-  
-  const handleChange = (prop) => (event) => {
-    setValues({ ...values, [prop]: event.target.value });
-  };
-  
-  const handleClickShowPassword = () => {
-    setValues({ ...values, showPassword: !values.showPassword });
-  };
-  
+ 
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
   const handlelogin =(e)=>{
     e.preventDefault()
     const data={
-      email:email,
+      username:username,
       password:password
     }
     axios.post("https://edu-up.herokuapp.com/teachers/login", data)
       .then(res =>{
         console.log(res)
-        if(res.access_token){
+        if(res.data.access_token){
           setFruit("teacher")
-          localStorage.setItem("token",res.access_token)
+          localStorage.setItem("token",res.data.access_token)
           Swal.fire({
             icon: 'success',
             title: 'تم الدخول بنجاح',
             showConfirmButton: true,
+            timer:1500
           })
           window.location.href = "/dashboard";
         }else{
-         window.alert(res.error)
-
+          const error = res.error
+          Swal.fire({
+            icon: 'error',
+            title: error,
+            showConfirmButton: true,
+          })
         }
       })
       .catch(err =>{
@@ -101,7 +94,6 @@ const [fruit,setFruit] = UselocalStorage("user")
         if (err.response) {
           const status =err.response.status;
           const message ="تاكد من كلمه المرور و الايميل"
-          // The request was made and the server responded with a status code
           // that falls out of the range of 2xx
           //window.alert(error.response.status);
           //window.alert(error.response.message);
@@ -129,7 +121,8 @@ const [fruit,setFruit] = UselocalStorage("user")
             icon: 'error',
             title: 'Oops...',
             text: msg,
-          });        return false;        }
+          });        return false;    
+            }
       
 
       })
@@ -157,7 +150,7 @@ const [fruit,setFruit] = UselocalStorage("user")
 
         </FormLabel>
         <Input
-        onChange={e=>setEmail(e.target.value)}
+        onChange={e=>setUsername(e.target.value)}
             margin="normal"
             required
             fullWidth
@@ -186,20 +179,10 @@ const [fruit,setFruit] = UselocalStorage("user")
             autoComplete="current-password"
             className="inp"
             id="standard-adornment-password"
-            type={values.showPassword ? 'text' : 'password'}
-            value={values.password}
+            type="password"
+            value={password}
             onChange={e=>setPassword(e.target.value)}
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-                >
-                  {values.showPassword ? <Visibility /> : <VisibilityOff />}
-                </IconButton>
-              </InputAdornment>
-            }
+     
           />
              
            

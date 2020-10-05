@@ -1,19 +1,47 @@
-import React, { Component } from 'react';
+import React, { Component ,useState,useEffect } from 'react';
 import Container from '@material-ui/core/Container';
 import './EditStudent.css';
+import axios from "axios"
+import Swal from "sweetalert2"
 
-
-export default class EditStudent extends Component {
-    render() {
+export default function EditStudent() {
+    const [localid,setLocalid]=useState(localStorage.getItem("teacher_id"))
+    const [students, setStudents] =useState([])
+    useEffect(()=>{
+        axios.get(`https://edu-up.herokuapp.com/operators/dashboard/teachers/${localid}/students`)
+        .then(res=>{
+            setStudents(res.data.teacher_students)
+        }).catch(err=>{
+            console.log(err)
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: "حدث خطأ ما ",
+              });        return false;
+        })
+    },[])
+    const DeleteStudent=(id ,e)=>{
+        axios.put(`https://edu-up.herokuapp.com/operators/dashboard/teachers/${localid}/students/${id}`)
+        .then(res=>{
+            if(res.data){
+            const newstudents = students.filter(item => item.id !== id);
+                setStudents(newstudents);
+            }else{
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: "حدث خطأ ما ",
+                  });        return false;            }
+        })
+    }
         return (
             <div>
                 
                 <Container className="welcome-add-cont-os">
-                    <h2 style={{color:"white"}} >اضافة طالب  </h2>
+                    <h2 style={{color:"white"}} >حذف او تعديل الطلاب  </h2>
                 </Container>
 
-
-
+\
                 <Container className="student-grade-cont-os">
 
 
@@ -63,22 +91,29 @@ export default class EditStudent extends Component {
 
 
                     <Container className="view-grade-cont-os" >
-                        <div>
-                            <div className="student-name-oss">
-                               <p style={{textAlign:"right" }} className="p-oss">سسسطارق محمد</p>
+                        {students.map((student,index)=>{
+                            return(
+                                <div key={index}>
+                                <div className="student-name-oss">
+                            <p style={{textAlign:"right" }} className="p-oss" value={student.id}>{student.fname}{student.lname} </p>
+                                </div>
+                                
+                                <div className="student-grades-os">
+                                <p style={{textAlign:"center" }} className="p-oss"> : {}</p>
+                                </div>
+                                
+                                <div>
+    
+                                        <button className="btn-os2"
+                                        onClick={e=>{DeleteStudent(student.id,e)}}
+                                        >حذف</button>
+                                        <button className="btn-os2" >تعديل </button>
+    
+                                </div>
                             </div>
-
-                            <div className="student-grades-os">
-                               <p style={{textAlign:"center" }} className="p-oss"> 50</p>
-                            </div>
-                            
-                            <div>
-
-                                    <button className="btn-os2" >حذف</button>
-                                    <button className="btn-os2" >تعديل </button>
-
-                            </div>
-                        </div>
+                            )
+                        })}
+                       
 
 
                         
@@ -96,5 +131,4 @@ export default class EditStudent extends Component {
 
             </div>
         )
-    }
 }

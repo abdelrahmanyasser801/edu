@@ -76,11 +76,14 @@ export default function Addteacher(){
     axios.post("https://edu-up.herokuapp.com/operators/dashboard/teachers",data)
     .then(res=>{
       console.log(res.data)
-      if(res.data.teacher_created){
-        window.alert("succ")
-        console.log("successs")
-        window.location.href = "/dashboard";
+      if(res.data){
+        Swal.fire({
+          icon: 'success',
+          title: 'تم اضافه مدرس بنجاح',
+          showConfirmButton: true,
+          timer:1500
       }
+        )}
     }).catch(err=>{
       console.log(err)
       if (err.response) {
