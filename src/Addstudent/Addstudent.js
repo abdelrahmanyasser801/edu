@@ -229,7 +229,7 @@ axios.get("https://edu-up.herokuapp.com/operators/dashboard/students")
         required>
          {years.map((year, index)=>{
            return(
-           <MenuItem key={index} value={year.id}>{year.title}</MenuItem>
+           <MenuItem key={index} value={year.id}>{year.name}</MenuItem>
            )
          })}
          
@@ -259,7 +259,7 @@ axios.get("https://edu-up.herokuapp.com/operators/dashboard/students")
           required>
             {groups.map((grp,index)=>{
               return(
-                <MenuItem key={index} value={grp.id}>{grp.name}</MenuItem>
+                <MenuItem key={index} value={grp.id}>{grp.title}</MenuItem>
               )
             })}
       
