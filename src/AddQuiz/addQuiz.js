@@ -3,8 +3,6 @@ import React ,{useState, useEffect } from "react"
 import {Grid  ,Select ,FormControl ,FormControlLabel ,MenuItem ,InputLabel,Button , IconButton ,TextField, Checkbox} from '@material-ui/core/';
 import "./addQuiz.css"
 import { makeStyles,useTheme } from '@material-ui/core/styles';
-import Input from '@material-ui/core/Input';
-import Chip from '@material-ui/core/Chip';
 import axios from 'axios';
 
     const useStyles = makeStyles((theme) => ({
@@ -131,11 +129,11 @@ export default function AddQuiz(){
           if(e.target.checked){
 
               tempSelect.push(+e.target.value)
-               setSelectGroups(tempSelect)
+              setSelectGroups(tempSelect)
     
           }else{
-            tempSelect.pop(+e.target.value)
-            setSelectGroups(tempSelect)
+              tempSelect.pop(+e.target.value)
+              setSelectGroups(tempSelect)
           }
            
           console.log(selectGroup)
