@@ -1,11 +1,9 @@
 
-import React ,{useState} from "react"
-import {Grid  ,Select ,FormControl ,FormHelperText ,MenuItem ,InputLabel,Button , IconButton ,TextField } from '@material-ui/core/';
+import React ,{useState, useEffect } from "react"
+import {Grid  ,Select ,FormControl ,FormControlLabel ,MenuItem ,InputLabel,Button , IconButton ,TextField, Checkbox} from '@material-ui/core/';
 import "./addQuiz.css"
 import { makeStyles,useTheme } from '@material-ui/core/styles';
-import Input from '@material-ui/core/Input';
-import Chip from '@material-ui/core/Chip';
-
+import axios from 'axios';
 
     const useStyles = makeStyles((theme) => ({
         container: {
@@ -45,10 +43,7 @@ import Chip from '@material-ui/core/Chip';
 };
 
 
-      const groupData  = [
-      1,2,3
-    
-      ];
+      
 
 
       function getStyles(groupp, group, theme) {
@@ -63,12 +58,18 @@ import Chip from '@material-ui/core/Chip';
 export default function AddQuiz(){
 
   const [year_id,setYear] = useState()
-  const [group,setGroup] = useState([])
   const [subject_id,setSubject]=useState('');
   const [teacher_id,setTeacher]=useState('');
+
+  const [incomeData,setIncomeData]= useState({
+      groups:[],
+      school_years:[],
+      teachers:[],
+      subject:[],
+  })
+  const [filterGroup,setFilterGroup]=useState(incomeData.groups)
+
   const theme = useTheme();
-
-
 
     const [dataExam,setDataExam] = useState({
       title:'',
@@ -76,9 +77,27 @@ export default function AddQuiz(){
       start_date:'',
       end_date:'',
     });
-
   
+  
+    useEffect(() => {
+         axios.get("https://edu-up.herokuapp.com/operators/dashboard/exams").then(response=>{
 
+           response.data.groups.map(gp=>{
+             gp.checked=false
+            })
+            
+            setIncomeData({...response.data})
+
+
+      })
+      .catch(error=>{
+        console.log(error)
+
+      })
+     
+    },[filterGroup])
+    
+   
 
         const handleChangeData = (e) => {
           setDataExam({
@@ -97,25 +116,36 @@ export default function AddQuiz(){
         };
        
         const handleChangeTeacher = (e) => {
+          const tempFilter= incomeData.groups.filter(group=>{
+            return group.teacher_id===+e.target.value 
+          })
           setTeacher(e.target.value);
+          setFilterGroup(tempFilter)
         };
-        const handleChangeMultipleGroup = (event) => {
-          setGroup(event.target.value);
-        };
-          // const handleChangeTotalTime = (e) => {
-          //   const dataTemp = {...dataExam};
-          //   const totalTime= {total_time:e.target.value};
-          //   dataTemp={...dataTemp,...totalTime}
-          //   setDataExam(dataTemp)
 
-          //      ;
-          // };
-        
+        const [selectGroup,setSelectGroups]=useState([])
+        const handleChangeMultipleGroup = (e) => {
+         const tempSelect = selectGroup 
+          if(e.target.checked){
+
+              tempSelect.push(+e.target.value)
+              setSelectGroups(tempSelect)
+    
+          }else{
+              tempSelect.pop(+e.target.value)
+              setSelectGroups(tempSelect)
+          }
+           
+          console.log(selectGroup)
+
+        };
+      
         
 
         const handleSubmit =(e)=>{
+
           e.preventDefault();
-          console.log(dataExam)
+     
 
         };
 
@@ -165,6 +195,7 @@ export default function AddQuiz(){
 
     return(
         <div className="addquestion-form">
+          {console.log(incomeData)}
             <form>
             <Grid container spacing={3} xs={12}
             direction="column"
@@ -183,9 +214,13 @@ export default function AddQuiz(){
                         label="المادة"
                         value={subject_id}
                       >
-                          <MenuItem value={'bio'}>أحياء</MenuItem>
-                          <MenuItem value={'chem'}>كيمياء</MenuItem>
-                          <MenuItem value={'phy'}>فيزياء</MenuItem>
+                        {incomeData.subject.map(sub=>{
+                          return(
+
+                          <MenuItem value={sub.id}>{sub.name}</MenuItem>
+                          )
+                        })}
+                         
                       </Select>
                    </FormControl>
                 </Grid>
@@ -199,16 +234,28 @@ export default function AddQuiz(){
                         onChange={handleChangeYear}
                         label="السنة الدراسية"
                         value={year_id}
-                      >
-                          <MenuItem value={1}>الاول</MenuItem>
-                          <MenuItem value={2}>الثاني</MenuItem>
-                          <MenuItem value={3}>الثالث</MenuItem>
+                      >{
+
+                        incomeData.school_years.map(year=>{
+                         return(
+                           <MenuItem value={year.id}>{year.name}</MenuItem>
+                         ) 
+                        })
+                      }
+                          
                       </Select>
                    </FormControl>
                 </Grid>
 
 
-
+              {
+                
+              
+              /* {incomeData.groups.map(group=>{
+                return(
+                <h1>{group.id}</h1>
+                )
+              })} */}
 
 
               <Grid item xs={12}>
@@ -226,53 +273,41 @@ export default function AddQuiz(){
                         value={teacher_id}
                         onChange={handleChangeTeacher}
                       >
-                          <MenuItem value={'1'}>حسن</MenuItem>
-                          <MenuItem value={'2'}>حسين</MenuItem>
-                          <MenuItem value={'3'}>حسانين</MenuItem>
+                         
+                        {
+                          incomeData.teachers.map(teacher=>{
+
+                            return(
+                            <MenuItem value={teacher.id}>{teacher.username}</MenuItem>
+                              
+                            ) 
+
+                          })
+
+                        } 
+                          
                       </Select>
                    </FormControl>
                 </Grid>
 
                 <Grid item xs={12}>
-                          <FormControl className={classes.formControl}>
-                          <InputLabel id="demo-mutiple-chip-label">المجموعة</InputLabel>
-                          <Select
-                            labelId="demo-mutiple-chip-label"
-                            id="demo-mutiple-chip"
-                            multiple
-                            value={group}
-                            onChange={handleChangeMultipleGroup}
-                            input={<Input id="select-multiple-chip" />}
-                            renderValue={(selected) => (
-                              <div className={classes.chips}>
-                                {selected.map((value) => (
-                                  <Chip key={value} label={value} className={classes.chip} />
-                                ))}
-                              </div>
-                            )}
-                            MenuProps={MenuProps}
-                          >
-                            {groupData.map((groupp) => (
-                              <MenuItem key={groupp} value={groupp} style={getStyles(groupp, group, theme)}>
-                                {groupp}
-                              </MenuItem>
-                            ))}
-                          </Select>
-                </FormControl>
-                {/* <FormControl variant="outlined">
-                      <InputLabel id="demo-simple-select-outlined-label"> المجموعة</InputLabel>
-                      <Select
-                        labelId="demo-simple-select-outlined-label"
-                        id="demo-simple-select-outlined"
-                        value={subject_id}
-                        onChange={handleChangeYear}
-                        label="المجموعة"
-                      >
-                          <MenuItem value={''}>1</MenuItem>
-                          <MenuItem value={''}>2</MenuItem>
-                          <MenuItem value={''}>3</MenuItem>
-                      </Select>
-                   </FormControl> */}
+                     
+                          {
+                            filterGroup.map(gp=>{
+                              return(
+
+                                <FormControlLabel  control={<Checkbox
+                                                          value={gp.id}
+                                                          id={gp.id}
+                                                          onChange={handleChangeMultipleGroup}
+                                                          />} 
+                                                          label={gp.title} />
+
+                              )
+                            })
+                          }
+
+
                 </Grid>
 
 

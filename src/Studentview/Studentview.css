@@ -33,3 +33,7 @@
         width: 50%;
     }
 }
+.exam-card
+{
+    margin : 0 0 20px 0 !important;
+}
