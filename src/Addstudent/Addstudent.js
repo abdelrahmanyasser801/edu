@@ -227,9 +227,9 @@ axios.get("https://edu-up.herokuapp.com/operators/dashboard/students")
          id="demo-simple-select-outlined"
           onChange={e=>setCurrentyear(e.target.value)}
         required>
-         {years.map(year=>{
+         {years.map((year, index)=>{
            return(
-           <MenuItem value={year.id}>{year.title}</MenuItem>
+           <MenuItem key={index} value={year.id}>{year.title}</MenuItem>
            )
          })}
          
@@ -257,9 +257,9 @@ axios.get("https://edu-up.herokuapp.com/operators/dashboard/students")
          id="demo-simple-select-outlined"
           onChange={e=>setCurrentgrp(e.target.value)}
           required>
-            {groups.map(grp=>{
+            {groups.map((grp,index)=>{
               return(
-                <MenuItem value={grp.id}>{grp.name}</MenuItem>
+                <MenuItem key={index} value={grp.id}>{grp.name}</MenuItem>
               )
             })}
       

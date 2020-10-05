@@ -16,6 +16,7 @@ import Allquiz from "../Allquiz/Allquiz"
 import Quizview from "../Quizview/Quizview"
 import Studentview from "../Studentview/Studentview"
 import Editteacher from "../Editteacher/Editteacher"
+import Addstudentteacher from "../Addstudentteacher/Addstudentteacher"
 
 // {/* ************** oss  ********* */}
 import Studentgrade from "../Studentgrade/Studentgrade"
@@ -135,7 +136,9 @@ export default function Nav() {
           </IconButton>
         </div>
         <Divider />
-        {localStorage.getItem("user")==="std"?
+        {localStorage.getItem("user")==="std" || 
+        localStorage.getItem("user")==="admin" || 
+        localStorage.getItem("user")==="teacher"?
         <List>
             
         <Link to='/'>
@@ -266,6 +269,11 @@ export default function Nav() {
               <ListItemText primary="  اضافة امتحان " />
             </ListItem>
           </Link>
+          <Link to='/addstudentteacher'>
+            <ListItem button>
+              <ListItemText primary="Addstudentteacher " />
+            </ListItem>
+          </Link>
 
     </List>
     }
@@ -288,6 +296,7 @@ export default function Nav() {
           <Route exact path="/teacherlogin" component={withRouter(Teacherlogin)}/>
           <Route exact path="/dashboard" component={withRouter(Dashboard)}/>
           <Route exact path="/editteacher" component={withRouter(Editteacher)}/>
+          <Route exact path="/addstudentteacher" component={withRouter(Addstudentteacher)}/>
 
              {/* ************** oss  ********* */}
           <Route  path="/grades" component={Studentgrade}/>

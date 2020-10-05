@@ -1,11 +1,19 @@
-import React, { Component } from 'react';
+import React, { Component,useState ,useEffect } from 'react';
 import Container from '@material-ui/core/Container';
 import './ActivationStudents.css';
+import axios from "axios"
 
-
-export default class ActivationStudents extends Component {
-    render() {
+export default function ActivationStudents() {
+    
+    useEffect(()=>{
+        axios.get("https://edu-up.herokuapp.com/operators/dashboard/all_students")
+        .then(res=>{
+            setStudents(res.data.students)
+        })
+    },[])
+    const [students , setStudents] = useState([])
         return (
+            
             <div>
                 
                 <Container className="welcome-exam-cont-os">
@@ -56,24 +64,24 @@ export default class ActivationStudents extends Component {
                                 <button className="btn-os" >ابحث</button>
                           </Container>
 
-
-
-
-
-
-
                     <Container className="view-grade-cont-os" >
+                        {students.map((student,index)=>{
+                            return(
+                                <div>
+                                <div className="student-name-os">
+                                <p style={{textAlign:"right" }} className="p-oss"> {student.fname}{student.lname}</p>
+                                  </div>
+                             
+                             <button className="btn-active-os" >تفعيل</button>
+                             <button className="btn-active-os" >عدم تفعيل</button>
+                             </div>
 
-                        <div>
+                            )
+                        })}
+                       
 
-                            <div className="student-name-os">
-                               <p style={{textAlign:"right" }} className="p-oss">سسسطارق محمد</p>
-                            </div>
-                            
-                            <button className="btn-active-os" >تفعيل</button>
-                            <button className="btn-active-os" >عدم تفعيل</button>
+                          
 
-                        </div>
 
                      <div>
 
@@ -103,4 +111,4 @@ export default class ActivationStudents extends Component {
             </div>
         )
     }
-}
+

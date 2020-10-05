@@ -46,8 +46,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignIn() {
-  const [email , setEmail] = useState('')
+  const [username , setUsername] = useState('')
   const [password , setPassword] = useState('')
+
   function UselocalStorage (localitem){
     const [loc,setState] = useState(localStorage.getItem(localitem))
     function setLocal(newitem){
@@ -58,24 +59,21 @@ export default function SignIn() {
    return [loc ,setLocal];
 }   
 const [fruit,setFruit] = UselocalStorage("user")
-  const [values, setValues] = useState({
-    password: '', 
-    showPassword: false,
-  });
   
   
   const handlelogin =(e)=>{
     e.preventDefault()
     const data={
-      email:email,
-      password:password
+      username:username,
+      password:password,
     }
+     
     axios.post("https://edu-up.herokuapp.com/students/login", data)
       .then(res =>{
         console.log(res)
-        if(res.access_token){
+        if(res.data.access_token){
           setFruit("std")
-          localStorage.setItem("token",res.access_token)
+          localStorage.setItem("token",res.data.access_token)
           Swal.fire({
             icon: 'success',
             title: 'تم الدخول بنجاح',
@@ -83,8 +81,12 @@ const [fruit,setFruit] = UselocalStorage("user")
           })
           window.location.href = "/dashboard";
         }else{
-         window.alert(res.error)
-
+          const error = res.error
+          Swal.fire({
+            icon: 'error',
+            title: error,
+            showConfirmButton: true,
+          })
         }
       })
       .catch(err =>{
@@ -130,10 +132,6 @@ const [fruit,setFruit] = UselocalStorage("user")
       
 
       })
-      
-      
-
-   
     }
     
   const classes = useStyles();
@@ -159,11 +157,9 @@ const [fruit,setFruit] = UselocalStorage("user")
             margin="normal"
             required
             fullWidth
-            value={email}
-            onChange={e =>{setEmail(e.target.value)}}
+            value={username}
+            onChange={e =>{setUsername(e.target.value)}}
             id="email"
-            name="email"
-            autoComplete="email"
             autoFocus
             className="inp"
             startAdornment={

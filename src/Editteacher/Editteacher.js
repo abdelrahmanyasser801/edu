@@ -10,7 +10,6 @@ export default function Editteacher(){
   useEffect (()=>{
     axios.get("https://edu-up.herokuapp.com/operators/dashboard/teachers")
     .then(res=>{
-      console.log(res.data)
       setAllsubjects(res.data.subjects)
     })
     .catch(err=>{
@@ -43,7 +42,7 @@ export default function Editteacher(){
       const [img ,setImg] =useState(null)
       const [imgData, setImgData] = useState(null);
       const [currentsub , setCurrentsub] =useState(allsubjects)
-
+      const [localid , setlocalid] = useState(localStorage.getItem("teacher_id"))
     
     const classes = useStyles();
 
@@ -73,14 +72,14 @@ export default function Editteacher(){
     const phonenumber = (e) =>
 {
     e.preventDefault()
-    axios.put("https://edu-up.herokuapp.com/operators/dashboard/teachers/teacher_id/",data)
+    axios.put(`https://edu-up.herokuapp.com/operators/dashboard/teachers/${localid}`,data)
     
     .then(res=>{
       console.log(res.data)
-      if(res.data.teacher_created){
-        window.alert("succ")
+      if(res.data){
+        window.alert("edited")
         console.log("successs")
-        window.location.href = "/dashboard";
+        window.location.href = "/adminview";
       }
     }).catch(err=>{
       console.log(err)
@@ -111,7 +110,6 @@ export default function Editteacher(){
       }
     
     })   
-    console.log(currentsub)
     const inputtxt = document.getElementById("outlined-basic3");
     let phoneno = /^\d{11}$/;
   if(inputtxt.value.match(phoneno))
@@ -142,12 +140,23 @@ export default function Editteacher(){
             alignItems="center"
             >
         <Grid item xs={12}>
-        <InputLabel className="inp1">ادخل اسم المدرس</InputLabel>
+        <InputLabel className="inp1">اسم المدرس</InputLabel>
         <TextField
-         className="out-input"
+          type="text"
+          className="out-input"
           id="outlined-basic" 
            placeholder="ادخل اسم المدرس" 
            onChange={e=>setName(e.target.value)}
+           required/>
+        </Grid>
+        <Grid item xs={12}>
+        <InputLabel className="inp1">رقم المدرس</InputLabel>
+        <TextField
+          type="number"
+          value={localid}
+          className="out-input"
+          id="outlined-basic" 
+           placeholder="ادخل اسم المدرس" 
            required/>
         </Grid>
         <Grid item xs={12}>

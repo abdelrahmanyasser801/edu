@@ -1,9 +1,11 @@
-import React ,{useState, useEffect} from "react"
+import React ,{useState, useEffect ,useContext} from "react"
 import "./Adminview.css"
 import {Grid,Card,CardActionArea ,CardActions ,CardContent ,CardMedia ,Button,Typography  } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import placeholder from "./placeholder.jpg"
 import axios from "axios"
+import { TeachersContext ,Apisdata} from "../Apisdata";
+import {Link} from "react-router-dom"
 const useStyles = makeStyles({
     root: {
       maxWidth: 275,
@@ -14,13 +16,27 @@ const useStyles = makeStyles({
         color:"white"
     }
   });
+
 export default function Adminview(){
+  const [admin ,setAdmin] = useState("اسم الادمن");
+  const [imgplaceholder , setImgplaceholder] = useState(placeholder)
+  const [allteachers ,setallteachers] = useState([]);
+  const [teacherid ,setid] = useState('');
+
+  const abdo = useContext(TeachersContext)
+
+
   useEffect (()=>{
     axios.get("https://edu-up.herokuapp.com/operators/dashboard/all_teachers")
     .then(res=>{
       console.log(res.data)
       setallteachers(res.data.teachers)
-  
+      this.history.push({
+        pathname: '/addstudentteacher',
+        search: '?query=ownerInformation',
+        state: { data: res.data.teachers }
+      })
+      
     })
     .catch(err=>{
       console.log(err)
@@ -29,13 +45,20 @@ export default function Adminview(){
   
     const classes = useStyles();
 
-    const [admin ,setAdmin] = useState("اسم الادمن");
-    const [imgplaceholder , setImgplaceholder] = useState(placeholder)
-    const [allteachers ,setallteachers] = useState([]);
-    const [teacherid ,setid] = useState('');
-    const edit =()=>
+  
+    const edit =(id ,e)=>
     {
       window.location.href = "/editteacher";
+      localStorage.setItem("teacher_id",id)
+
+    }
+    const Deletestudent =(id , e)=>{
+      window.location.href = "/edit";
+      localStorage.setItem("teacher_id",id)
+
+    }
+    const Addstudent=(id,e)=>{
+      localStorage.setItem("teacher_id",id)
     }
    const deleteteacher =(id,e)=>
    {
@@ -90,6 +113,9 @@ export default function Adminview(){
           <Typography className={classes.text} variant="h5" align="center"  component="p">
             {teacher.mobile}
           </Typography>
+          <Typography className={classes.text} variant="h5" align="center"  component="p">
+            {teacher.id}
+          </Typography>
           
         </CardContent>
       </CardActionArea>
@@ -107,14 +133,23 @@ export default function Adminview(){
         </Button>
         </Grid>
         <Grid item>
-        <Button variant="contained" className="admin-view-form-button">
+          <Link to="/edit">
+          <Button variant="contained" className="admin-view-form-button"
+          onClick={e=>Deletestudent(teacher.id ,e)}
+          >
           حذف الطالب
-        </Button>
+        </Button>  
+          </Link>
+        
         </Grid>
         <Grid item>
-        <Button variant="contained" className="admin-view-form-button">
+          <Link to="/addstudentteacher">
+        <Button variant="contained" className="admin-view-form-button"
+        onClick={e=>Addstudent(teacher.id ,e)} 
+        >
         اضافه طالب
         </Button>
+        </Link>
         </Grid>
 
         <Grid item>
@@ -130,7 +165,7 @@ export default function Adminview(){
         <Grid item>
         <Button variant="contained" 
         className="admin-view-form-button"
-        onClick={edit}
+        onClick={e=>edit(teacher.id,e)}
         >
 تعديل        </Button>
         </Grid>

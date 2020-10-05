@@ -80,11 +80,21 @@ const [fruit,setFruit] = UselocalStorage("user")
 
         if(res.data.access_token){
           setFruit("admin")
-          localStorage.setItem("token",res.access_token)
+          localStorage.setItem("token",res.data.access_token)
+          Swal.fire({
+            icon: 'success',
+            title: 'تم الدخول بنجاح',
+            showConfirmButton: true,
+
+          })
           window.location.href = "/dashboard";
         }else{
-         window.alert(res.error)
-         window.alert("Eeeeeeeeeeeeeeeeeeeeeeeeeeee")
+          const error = res.error
+          Swal.fire({
+            icon: 'error',
+            title: error,
+            showConfirmButton: true,
+          })
 
         }
       })

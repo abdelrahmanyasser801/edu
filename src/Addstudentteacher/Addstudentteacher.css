@@ -83,7 +83,18 @@
   cursor: pointer;
 }
 
-  
+.finish-btn{
+    width: 40%;
+    background-color: #8a1f3a;
+    color: white;
+    padding: 14px 20px;
+    margin-top: 40px;
+    margin-left: 25px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    
+} 
 
 /*small screen*/
 
@@ -109,16 +120,18 @@
     }
     .p-oss{
         font-size: 10px;
+        color: black;
     }
     .student-name-os{
        min-width: 90% !important;
+       color: black;
     }
 
     .view-grade-cont-os{
         display: none;
     }
     .btn-active-os{
-        width: 80px;
+        width: 50px;
         background-color: #3c6438;
         color: white;
         margin-top: 10px;
@@ -127,6 +140,7 @@
         border-radius: 4px;
         cursor: pointer;
         height: 20px;
+       
       }
 
 
