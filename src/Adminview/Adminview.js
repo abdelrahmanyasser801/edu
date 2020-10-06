@@ -46,10 +46,11 @@ export default function Adminview(){
     const classes = useStyles();
 
   
-    const edit =(id ,e)=>
+    const edit =(id ,firstname,e)=>
     {
       window.location.href = "/editteacher";
       localStorage.setItem("teacher_id",id)
+      localStorage.setItem("firstname",firstname)
 
     }
     const Deletestudent =(id , e)=>{
@@ -82,15 +83,14 @@ export default function Adminview(){
         
         <div className="admin-view-form">
             <p className="admin-name">اهلا يا {admin} </p>
-
-{allteachers.map((teacher,index)=>{
-    return(
-<Grid container key={index} 
-        id={teacher.id}
+            <Grid container  
         justify="center"
         alignItems="center"
         spacing={2}
         >
+{allteachers.map((teacher,index)=>{
+    return(
+
             <Grid item
         
             >
@@ -145,7 +145,7 @@ export default function Adminview(){
         <Grid item>
           <Link to="/addstudentteacher">
         <Button variant="contained" className="admin-view-form-button"
-        onClick={e=>Addstudent(teacher.id ,e)} 
+        onClick={e=>Addstudent(teacher.id,e)} 
         >
         اضافه طالب
         </Button>
@@ -165,7 +165,7 @@ export default function Adminview(){
         <Grid item>
         <Button variant="contained" 
         className="admin-view-form-button"
-        onClick={e=>edit(teacher.id,e)}
+        onClick={e=>edit(teacher.id,teacher.username ,e)}
         >
 تعديل        </Button>
         </Grid>
@@ -175,11 +175,11 @@ export default function Adminview(){
     </Card>
             </Grid>
             
-            </Grid>
           )
 })}
 
-        
+</Grid>
+   
         </div>
     );
 }

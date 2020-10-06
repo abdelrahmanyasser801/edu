@@ -50,8 +50,11 @@ export default function ActivationStudents() {
         const newteachers = students.filter(item => item.id !== id);
         setStudents(newteachers);
     }
-    const Edit = (id, e) => {
+    const Edit = (id,fname,lname,mobile, e) => {
         localStorage.setItem("student_id", id)
+        localStorage.setItem("fname", fname)
+        localStorage.setItem("lname", lname)
+        localStorage.setItem("mobile", mobile)
         window.location.href = "/editstudentdata"
     }
 
@@ -155,7 +158,7 @@ export default function ActivationStudents() {
                                     >حذف</button>
                                     <Link to="/editstudentdata">
                                         <button className="btn-os2"
-                                            onClick={e => { Edit(student.id, e) }}
+                                            onClick={e => { Edit(student.id,student.fname,student.lname,student.mobile, e) }}
                                         >تعديل </button>
                                     </Link>
                                     {/**الدرجات لسه مش خلصانه */}
@@ -170,21 +173,9 @@ export default function ActivationStudents() {
 
 
                         )
-                    })}
-
-
+                    })}xxxx
                 </Container>
-
-
-
-
-
-
-
-
             </Container>
-
-
         </div >
     )
 }
