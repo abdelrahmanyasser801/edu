@@ -145,18 +145,17 @@ export default function Editteacher(){
           type="text"
           className="out-input"
           id="outlined-basic" 
-           placeholder="ادخل اسم المدرس" 
            onChange={e=>setName(e.target.value)}
+           placeholder={localStorage.getItem("firstname")}
            required/>
         </Grid>
         <Grid item xs={12}>
         <InputLabel className="inp1">رقم المدرس</InputLabel>
         <TextField
           type="number"
-          value={localid}
           className="out-input"
           id="outlined-basic" 
-           placeholder="ادخل اسم المدرس" 
+           placeholder={localid} 
            required/>
         </Grid>
         <Grid item xs={12}>
@@ -185,7 +184,8 @@ export default function Editteacher(){
              required 
              className="out-input"
               id="outlined-basic3"
-               placeholder="ادخل رقم الهاتف"  />
+               placeholder="ادخل رقم الهاتف" 
+               />
           </Grid>
 
 

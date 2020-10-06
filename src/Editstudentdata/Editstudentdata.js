@@ -154,19 +154,20 @@ axios.get("https://edu-up.herokuapp.com/operators/dashboard/students")
         <InputLabel className="inp1">ادخل الاسم الاول</InputLabel>
         <TextField className="out-input"
          id="outlined-basic15" 
-          placeholder="ادخل الاسم الاول" 
           required
           onChange={e=>setFname(e.target.value)}
-          />
+          placeholder={localStorage.getItem("fname")}
+         />
         </Grid>
 
         <Grid item xs={12}>
         <InputLabel className="inp1">ادخل اسم العائلة</InputLabel>
         <TextField className="out-input"
          id="outlined-basic16"  
-         placeholder="ادخل اسم العائلة"   
          required
          onChange={e=>setLname(e.target.value)}
+         placeholder={localStorage.getItem("lname")}
+
          />
         </Grid>
         
@@ -175,10 +176,9 @@ axios.get("https://edu-up.herokuapp.com/operators/dashboard/students")
         <InputLabel className="inp1">ادخل اسم الطالب</InputLabel>
         <TextField className="out-input" 
         id="outlined-basic17" 
-         placeholder="ادخل اسم الطالب" 
           required
           onChange={e=>setUsername(e.target.value)}
-
+          placeholder={`${localStorage.getItem("fname")}+${localStorage.getItem("lname")}`}
           />
 
         </Grid>
@@ -205,8 +205,9 @@ axios.get("https://edu-up.herokuapp.com/operators/dashboard/students")
           required 
           className="out-input" 
           id="outlined-basic3"
-           placeholder="ادخل رقم الهاتف" 
+           
            onChange={e=>setMobile(e.target.value)}
+           placeholder={localStorage.getItem("mobile")}
 
            />
           </Grid>
