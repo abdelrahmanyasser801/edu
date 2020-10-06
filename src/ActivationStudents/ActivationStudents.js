@@ -4,14 +4,75 @@ import './ActivationStudents.css';
 import axios from "axios"
 
 export default function ActivationStudents() {
-    
+    const [activestudents , setActivestudents] = useState([
+
+        {
+            
+                
+                    "exams_num": 0,
+                    "fname": "aa",
+                    "has_exam": false,
+                    "id": 8,
+                    "lname": "bb",
+                    "mobile": "8763456785",
+                    "teachers_num": 1,
+                    "username": "ab"
+                },
+                {
+                    "exams_num": 1,
+                    "fname": "xxx",
+                    "has_exam": true,
+                    "id": 7,
+                    "lname": "zzz",
+                    "mobile": "123459875",
+                    "teachers_num": 1,
+                    "username": "xz"
+                }
+            
+           
+        
+
+    ])
+    const [notactivestudents , setNotactivestudents] = useState([
+
+        
+        
+                {
+                    "exams_num": 1,
+                    "fname": "bc",
+                    "has_exam": false,
+                    "id": 8,
+                    "lname": "fg",
+                    "mobile": "8763456785",
+                    "teachers_num": 2,
+                    "username": "hq"
+                },
+                {
+                    "exams_num": 1,
+                    "fname": "yy",
+                    "has_exam": true,
+                    "id": 7,
+                    "lname": "kl",
+                    "mobile": "123459875",
+                    "teachers_num": 4,
+                    "username": "ty"
+                }
+            ],
+           
+        
+        
+    )
+
+    const [examid ,setexamid]=useState(localStorage.getItem("exam_id"))
+    {/** 
     useEffect(()=>{
-        axios.get("https://edu-up.herokuapp.com/operators/dashboard/all_students")
+        axios.get(`https://edu-up.herokuapp.com/operators/dashboard/exams/${examid}/students`)
         .then(res=>{
-            setStudents(res.data.students)
+            setActivestudents(res.data.activated__students)
+            setNotactivestudents(res.data.not_active_students)
         })
     },[])
-    const [students , setStudents] = useState([])
+    */}
         return (
             
             <div>
@@ -65,34 +126,41 @@ export default function ActivationStudents() {
                           </Container>
 
                     <Container className="view-grade-cont-os" >
-                        {students.map((student,index)=>{
+                        {activestudents ?
+                        activestudents.map((student,index)=>{
                             return(
-                                <div>
+                                <div key={index}>
+                                <div className="student-name-os">
+                                <p style={{textAlign:"right" }} className="p-oss"> {student.fname}{student.lname}</p>
+                                  </div>
+                             
+                             <button className="btn-active-os" disabled>تفعيل</button>
+                             <button className="btn-active-os" >عدم تفعيل</button>
+                             </div>
+
+                            )
+                        })
+                       
+
+                        : notactivestudents.map((student,index)=>{
+                            return(
+                                <div key={index}>
                                 <div className="student-name-os">
                                 <p style={{textAlign:"right" }} className="p-oss"> {student.fname}{student.lname}</p>
                                   </div>
                              
                              <button className="btn-active-os" >تفعيل</button>
-                             <button className="btn-active-os" >عدم تفعيل</button>
+                             <button className="btn-active-os" disabled>عدم تفعيل</button>
                              </div>
 
                             )
-                        })}
-                       
-
+                        })
+                       }
+                        
                           
 
 
-                     <div>
-
-                            <div className="student-name-os">
-                               <p style={{textAlign:"right" }} className="p-oss">سسسطارق محمد</p>
-                            </div>
-                            
-                            <button className="btn-active-os" >تفعيل</button>
-                            <button className="btn-active-os" >عدم تفعيل</button>
-
-                        </div>
+                    
 
                                     
 

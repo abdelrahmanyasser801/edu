@@ -18,6 +18,7 @@ import Studentview from "../Studentview/Studentview"
 import Editteacher from "../Editteacher/Editteacher"
 import Addstudentteacher from "../Addstudentteacher/Addstudentteacher"
 import Allquizadmin from "../Allquizadmin/Allquizadmin"
+import Allstudents from "../Allstudents/Allstudents"
 
 // {/* ************** oss  ********* */}
 import Studentgrade from "../Studentgrade/Studentgrade"
@@ -198,6 +199,12 @@ export default function Nav() {
             </ListItem>
           </Link>
 
+          <Link to='/allstudents'>
+            <ListItem button>
+              <ListItemText primary="allstudents" />
+            </ListItem>
+          </Link>
+
           <Link to='/studentview'>
             <ListItem button>
               <ListItemText primary="عرض الطالب" />
@@ -306,6 +313,7 @@ export default function Nav() {
           <Route exact path="/editteacher" component={withRouter(Editteacher)}/>
           <Route exact path="/addstudentteacher" component={withRouter(Addstudentteacher)}/>
           <Route exact path="/allquizadmin" component={withRouter(Allquizadmin)}/>
+          <Route exact path="/Allstudents" component={withRouter(Allstudents)}/>
 
              {/* ************** oss  ********* */}
           <Route  path="/grades" component={Studentgrade}/>
