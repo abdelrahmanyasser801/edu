@@ -64,7 +64,7 @@ export default function ActivationStudents() {
     const [examid, setexamid] = useState(localStorage.getItem("exam_id"))
     {/** 
     useEffect(()=>{
-        axios.get(`https://edu-up.herokuapp.com/operators/dashboard/exams/${examid}/students`)
+        axios.get(https://edu-up.herokuapp.com/operators/dashboard/exams/${examid}/students)
         .then(res=>{
             setActivestudents(res.data.activated__students)
             setNotactivestudents(res.data.not_active_students)
@@ -165,4 +165,3 @@ export default function ActivationStudents() {
         </div>
     )
 }
-
