@@ -17,6 +17,8 @@ import Quizview from "../Quizview/Quizview"
 import Studentview from "../Studentview/Studentview"
 import Editteacher from "../Editteacher/Editteacher"
 import Addstudentteacher from "../Addstudentteacher/Addstudentteacher"
+import Allquizadmin from "../Allquizadmin/Allquizadmin"
+import Allstudents from "../Allstudents/Allstudents"
 
 // {/* ************** oss  ********* */}
 import Studentgrade from "../Studentgrade/Studentgrade"
@@ -197,6 +199,12 @@ export default function Nav() {
             </ListItem>
           </Link>
 
+          <Link to='/allstudents'>
+            <ListItem button>
+              <ListItemText primary="allstudents" />
+            </ListItem>
+          </Link>
+
           <Link to='/studentview'>
             <ListItem button>
               <ListItemText primary="عرض الطالب" />
@@ -220,6 +228,13 @@ export default function Nav() {
               <ListItemText primary="تسجيل دخول ادمن" />
             </ListItem>
           </Link>
+          <Link to='/allquizadmin'>
+            <ListItem button>
+              <ListItemText primary="allquizadmin" />
+            </ListItem>
+          </Link>
+
+
         {/**osos */}
         <Link to='/grades'>
             <ListItem button>
@@ -297,6 +312,8 @@ export default function Nav() {
           <Route exact path="/dashboard" component={withRouter(Dashboard)}/>
           <Route exact path="/editteacher" component={withRouter(Editteacher)}/>
           <Route exact path="/addstudentteacher" component={withRouter(Addstudentteacher)}/>
+          <Route exact path="/allquizadmin" component={withRouter(Allquizadmin)}/>
+          <Route exact path="/Allstudents" component={withRouter(Allstudents)}/>
 
              {/* ************** oss  ********* */}
           <Route  path="/grades" component={Studentgrade}/>

@@ -3,8 +3,6 @@ import React, { useState, useEffect } from "react"
 import { Grid, Select, FormControl, FormControlLabel, MenuItem, InputLabel, Button, IconButton, TextField, Checkbox } from '@material-ui/core/';
 import "./addQuiz.css"
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import Input from '@material-ui/core/Input';
-import Chip from '@material-ui/core/Chip';
 import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
@@ -78,7 +76,14 @@ export default function AddQuiz() {
     total_time: '',
     start_date: '',
     end_date: '',
+    year_id: '',
+    teacher_id: '',
+    groups_ids: []
+
+
+
   });
+
 
 
   useEffect(() => {
@@ -89,6 +94,7 @@ export default function AddQuiz() {
       })
 
       setIncomeData({ ...response.data })
+      console.log("Inceme Date : ", response.data)
 
 
     })
@@ -99,13 +105,14 @@ export default function AddQuiz() {
 
   }, [filterGroup])
 
-
-
+  const [yearState, setYearState] = useState(true)
+  //year
   const handleChangeData = (e) => {
     setDataExam({
       ...dataExam
       , [e.target.name]: e.target.value
     });
+
   };
 
 
@@ -115,20 +122,26 @@ export default function AddQuiz() {
   };
   const handleChangeYear = (e) => {
     setYear(e.target.value)
-      ;
-  };
-
-  const handleChangeTeacher = (e) => {
+    //school_year_id
     const tempFilter = incomeData.groups.filter(group => {
+      return group.school_year_id === +e.target.value
+    })
+    setFilterGroup(tempFilter)
+    setYearState(false)
+  };
+  const [teacherState, setTeacherStaet] = useState(false)
+  const handleChangeTeacher = (e) => {
+    const tempFilter = filterGroup.filter(group => {
       return group.teacher_id === +e.target.value
     })
     setTeacher(e.target.value);
     setFilterGroup(tempFilter)
+    setTeacherStaet(true)
   };
 
-  const [selectGroup, setSelectGroups] = useState([])
+  const [groups_ids, setSelectGroups] = useState([])
   const handleChangeMultipleGroup = (e) => {
-    const tempSelect = selectGroup
+    const tempSelect = groups_ids
     if (e.target.checked) {
 
       tempSelect.push(+e.target.value)
@@ -139,15 +152,32 @@ export default function AddQuiz() {
       setSelectGroups(tempSelect)
     }
 
-    console.log(selectGroup)
-
   };
 
 
 
   const handleSubmit = (e) => {
 
+
     e.preventDefault();
+    const tempo = {
+      ...dataExam,
+      "groups_ids": groups_ids,
+      "teacher_id": teacher_id
+    }
+    console.log(tempo)
+    axios.post("https://edu-up.herokuapp.com/operators/dashboard/exams", tempo)
+      .then(res => {
+
+        if (res.dataExam) {
+          console.log('done el7amdulellah')
+        } else {
+          console.log('error')
+        }
+
+      }).catch(error => {
+        console.log(error)
+      })
 
 
   };
@@ -198,7 +228,6 @@ export default function AddQuiz() {
 
   return (
     <div className="addquestion-form">
-      {console.log(incomeData)}
       <form>
         <Grid container spacing={3} xs={12}
           direction="column"
@@ -236,7 +265,9 @@ export default function AddQuiz() {
                 id="demo-simple-select-outlined"
                 onChange={handleChangeYear}
                 label="السنة الدراسية"
-                value={year_id}
+                value={dataExam.year_id}
+                name="year_id"
+                disabled={!yearState}
               >{
 
                   incomeData.school_years.map(year => {
@@ -275,6 +306,7 @@ export default function AddQuiz() {
                 label=" المدرس"
                 value={teacher_id}
                 onChange={handleChangeTeacher}
+                disabled={teacherState || yearState}
               >
 
                 {
