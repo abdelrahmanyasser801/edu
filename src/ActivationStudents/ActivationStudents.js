@@ -157,20 +157,7 @@ export default function ActivationStudents() {
                     }
 
 
-
-
-
-
-
-
                 </Container>
-
-
-
-
-
-
-
 
             </Container>
 
