@@ -4,6 +4,7 @@ import Adminview from "../Adminview/Adminview.js"
 import Addteacher from "../Addteacher/Addteacher.js"
 import ActivationStudents from "../ActivationStudents/ActivationStudents.js"
 import Allstudents from "../Allstudents/Allstudents.js"
+import Adminpage from "../AdminPage/index"
 export default function Dashboard() {
   const [role,setrole] = useState('')
 
@@ -24,13 +25,12 @@ export default function Dashboard() {
     <div>
       {role==="std" ? 
       <Studentview/> 
-      :(role==="admin")?
-      <Adminview/>
-      :(role==="teacher")?
+      :(role==="admin") ?
+      <Adminpage/>
+      :(role==="teacher") ?
       <Allstudents/>:<><br></br><br></br><br></br><h1>ERROR 404 ! YOU HAVE NO ROLE</h1></>
-    }
-    
-      </div>
+      }
+    </div>
   );
 }
 

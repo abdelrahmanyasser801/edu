@@ -1,25 +1,18 @@
 import React,{useState , useEffect} from "react"
 import "./Addstudent.css"
-import {Grid,Input ,InputAdornment ,Select ,FormControl ,FormHelperText ,MenuItem ,InputLabel,Button , IconButton ,TextField } from '@material-ui/core/';
+import {Grid,Input  ,Select ,FormControl  ,MenuItem ,InputLabel,Button  ,TextField } from '@material-ui/core/';
 import { makeStyles } from '@material-ui/core/styles';
 import Swal from "sweetalert2"
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import axios from "axios"
 export default function Addstudent(){
+   
 useEffect(()=>{
 axios.get("https://edu-up.herokuapp.com/operators/dashboard/students")
 .then(res=>{
   console.log(res)
   setGroups(res.data.groups)
-})
-.catch(err=>{
-  console.log(err)
-})
-axios.get("https://edu-up.herokuapp.com/operators/dashboard/students")
-.then(res=>{
-  console.log(res)
   setYears(res.data.school_years)
+  setTeachers(res.data.teachers)
 })
 .catch(err=>{
   console.log(err)
@@ -40,31 +33,31 @@ axios.get("https://edu-up.herokuapp.com/operators/dashboard/students")
         }
       }));
 
-    {/************************APIS ARRAYS************************** */}
-    const [groups, setGroups] = useState([]);
-    const [years, setYears] = useState([]);
-    {/************************************************************** */}
-    const classes = useStyles();
-    const [fname,setFname]=useState('')
-    const [lname,setLname]=useState('')
-    const [username,setUsername]=useState('')
-    const [password,setPassword]=useState('')
-    const [mobile,setMobile]=useState('')
-    const [teacherid,setTeacherid]=useState('')
-    const [currentgroup,setCurrentgrp]=useState('')
-    const [currentyear,setCurrentyear]=useState('')
+   {/************************APIS ARRAYS************************** */}
+   const [groups, setGroups] = useState([]);
+   const [years, setYears] = useState([]);
+   const [teachers , setTeachers] =useState([])
+   {/************************************************************** */}
+   const classes = useStyles();
+   const [fname,setFname]=useState('')
+   const [lname,setLname]=useState('')
+   const [username,setUsername]=useState('')
+   const [password,setPassword]=useState('')
+   const [mobile,setMobile]=useState('')
+   const [teacherid,setTeacherid]=useState('')
+   const [currentgroup,setCurrentgrp]=useState('')
+   const [currentyear,setCurrentyear]=useState('')
 
-    const data={  
-      fname: fname,
-      lname: lname,
-      username: username,
-      password: password,
-      mobile: mobile,
-      school_year_id: currentyear,
-      group_id: currentgroup,
-      teacher_id: teacherid
-    }
-   
+   const data={  
+     fname: fname,
+     lname: lname,
+     username: username,
+     password: password,
+     mobile: mobile,
+     school_year_id: currentyear,
+     group_id: currentgroup,
+     teacher_id: teacherid
+   }
     const phonenumber = (e) =>
 {
     e.preventDefault()
@@ -236,19 +229,25 @@ axios.get("https://edu-up.herokuapp.com/operators/dashboard/students")
           </Select>
           </FormControl>
           </Grid>
-       
-        <Grid item xs={12} >
-        <InputLabel className="inp1">رقم المدرس</InputLabel>
-        <TextField className="out-input"
-         id="outlined-basic20"  
-         type="number"
-         placeholder="ادخل رقم المدرس"   
-         required
-         onChange={e=>setTeacherid(e.target.value)}
-
-         />
-
-        </Grid>
+         
+          <Grid item xs={12}>
+          <FormControl variant="outlined">
+        <InputLabel id="demo-simple-select-outlined-label">المدرس</InputLabel>
+        <Select
+         labelId="demo-simple-select-outlined-label"
+         id="demo-simple-select-outlined"
+          onChange={e=>setTeacherid(e.target.value)}
+        required>
+         {teachers.map((teacher, index)=>{
+           return(
+           <MenuItem key={index} value={teacher.id}>{teacher.username}</MenuItem>
+           )
+         })}
+         
+          </Select>
+          </FormControl>
+          </Grid>
+     
         <Grid item xs={12}>
         <FormControl variant="outlined">
         <InputLabel id="demo-simple-select-outlined-label">المجموعة</InputLabel>
