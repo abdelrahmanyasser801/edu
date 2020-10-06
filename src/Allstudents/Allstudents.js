@@ -10,13 +10,13 @@ export default function ActivationStudents() {
     const [years, setYear] = useState([])
     const [yearState, setYearState] = useState(false)
     const [teacherState, setTeacherState] = useState(false)
+    const [filtered, setfiltered] = useState([])
 
 
     const [currentteacher, setCurrentteacher] = useState("")
     const [currentyear, setCurrentyear] = useState("")
     const [currentgroup, setCurrentgroup] = useState("")
 
-    const [filtered, setfiltered] = useState([])
     useEffect(() => {
         axios.get("https://edu-up.herokuapp.com/operators/dashboard/all_students")
             .then(res => {
