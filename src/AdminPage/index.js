@@ -2,6 +2,16 @@ import React from 'react';
 import './adminPage.css';
 import Container from '@material-ui/core/Container';
 
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link,
+    withRouter
+  }from "react-router-dom";
+
+  
+
 const  AdminPage = () => {
     return (
         <div>

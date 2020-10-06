@@ -46,8 +46,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignIn() {
-  const [email , setEmail] = useState('')
+  const [username , setUsername] = useState('')
   const [password , setPassword] = useState('')
+
   function UselocalStorage (localitem){
     const [loc,setState] = useState(localStorage.getItem(localitem))
     function setLocal(newitem){
@@ -58,35 +59,34 @@ export default function SignIn() {
    return [loc ,setLocal];
 }   
 const [fruit,setFruit] = UselocalStorage("user")
-  const [values, setValues] = useState({
-    password: '', 
-    showPassword: false,
-  });
   
   
-  const handleClickShowPassword = () => {
-    setValues({ ...values, showPassword: !values.showPassword });
-  };
-  
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
   const handlelogin =(e)=>{
     e.preventDefault()
     const data={
-      email:email,
-      password:password
+      username:username,
+      password:password,
     }
+     
     axios.post("https://edu-up.herokuapp.com/students/login", data)
       .then(res =>{
         console.log(res)
-        if(res.access_token){
+        if(res.data.access_token){
           setFruit("std")
-          localStorage.setItem("token",res.access_token)
+          localStorage.setItem("token",res.data.access_token)
+          Swal.fire({
+            icon: 'success',
+            title: 'تم الدخول بنجاح',
+            showConfirmButton: true,
+          })
           window.location.href = "/dashboard";
         }else{
-         window.alert(res.error)
-
+          const error = res.error
+          Swal.fire({
+            icon: 'error',
+            title: error,
+            showConfirmButton: true,
+          })
         }
       })
       .catch(err =>{
@@ -106,22 +106,32 @@ const [fruit,setFruit] = UselocalStorage("user")
           
 
         } else if (err.request) {
+          const req = err.request
           // The request was made but no response was received
           // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
           // http.ClientRequest in node.js
-          window.alert(err.request);
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: req,
+          });        return false;
+          
+
 
         } else {
+          const msg = err.message
           // Something happened in setting up the request that triggered an Error
-          window.alert('Error', err.message);
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: msg,
+          });        return false;
+          
+
         }
       
 
       })
-      
-      
-
-   
     }
     
   const classes = useStyles();
@@ -147,11 +157,9 @@ const [fruit,setFruit] = UselocalStorage("user")
             margin="normal"
             required
             fullWidth
-            value={email}
-            onChange={e =>{setEmail(e.target.value)}}
+            value={username}
+            onChange={e =>{setUsername(e.target.value)}}
             id="email"
-            name="email"
-            autoComplete="email"
             autoFocus
             className="inp"
             startAdornment={
@@ -174,20 +182,9 @@ const [fruit,setFruit] = UselocalStorage("user")
             autoComplete="current-password"
             className="inp"
             id="standard-adornment-password"
-            type={values.showPassword ? 'text' : 'password'}
-            value={password}
+            type='password'
             onChange={e =>setPassword(e.target.value)}
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-                >
-                  {values.showPassword ? <Visibility /> : <VisibilityOff />}
-                </IconButton>
-              </InputAdornment>
-            }
+           
           />
              
            

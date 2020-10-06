@@ -15,14 +15,21 @@ import Adminview from "../Adminview/Adminview"
 import Allquiz from "../Allquiz/Allquiz"
 import Quizview from "../Quizview/Quizview"
 import Studentview from "../Studentview/Studentview"
+import Editteacher from "../Editteacher/Editteacher"
+import Addstudentteacher from "../Addstudentteacher/Addstudentteacher"
+import Allquizadmin from "../Allquizadmin/Allquizadmin"
+import Allstudents from "../Allstudents/Allstudents"
 
 // {/* ************** oss  ********* */}
 import Studentgrade from "../Studentgrade/Studentgrade"
 import ActivationStudents from "../ActivationStudents/ActivationStudents"
 import EditStudent from "../EditStudent/EditStudent"
-import ShowQuestionsToAdmin from "../ShowQuestionsToAdmin/index"
 import GradesStudents from "../Grades/index"
 import AdminPage from "../AdminPage/index"
+import AddQuiz from "../AddQuiz/addQuiz"
+
+
+
 
 
 
@@ -131,6 +138,18 @@ export default function Nav() {
           </IconButton>
         </div>
         <Divider />
+        {localStorage.getItem("user")==="std" || 
+        localStorage.getItem("user")==="admin" || 
+        localStorage.getItem("user")==="teacher"?
+        <List>
+            
+        <Link to='/'>
+          <ListItem button>
+            <ListItemText primary="logout" onClick={e=> localStorage.clear()} />
+          </ListItem>
+        </Link> 
+        </List> 
+      :
         <List>
             
           <Link to='/home'>
@@ -180,6 +199,12 @@ export default function Nav() {
             </ListItem>
           </Link>
 
+          <Link to='/allstudents'>
+            <ListItem button>
+              <ListItemText primary="allstudents" />
+            </ListItem>
+          </Link>
+
           <Link to='/studentview'>
             <ListItem button>
               <ListItemText primary="عرض الطالب" />
@@ -203,10 +228,15 @@ export default function Nav() {
               <ListItemText primary="تسجيل دخول ادمن" />
             </ListItem>
           </Link>
+          <Link to='/allquizadmin'>
+            <ListItem button>
+              <ListItemText primary="allquizadmin" />
+            </ListItem>
+          </Link>
 
 
-
-          <Link to='/grades'>
+        {/**osos */}
+        <Link to='/grades'>
             <ListItem button>
               <ListItemText primary="grades" />
             </ListItem>
@@ -214,21 +244,29 @@ export default function Nav() {
 
           <Link to='/active'>
             <ListItem button>
-              <ListItemText primary=" active " />
+              <ListItemText primary="active" />
             </ListItem>
           </Link>
 
           <Link to='/edit'>
             <ListItem button>
-              <ListItemText primary=" edit " />
+              <ListItemText primary="edit" />
+            </ListItem>
+          </Link>
+          
+          <Link to='/studentgrades'>
+            <ListItem button>
+              <ListItemText primary="studentgrades" />
+            </ListItem>
+          </Link>
+          <Link to='/adminpage'>
+            <ListItem button>
+              <ListItemText primary="adminpage" />
             </ListItem>
           </Link>
 
-          <Link to='/show-question'>
-            <ListItem button>
-              <ListItemText primary="  show quest" />
-            </ListItem>
-          </Link>
+
+         
 
           <Link to='/studentgrades'>
             <ListItem button>
@@ -241,8 +279,19 @@ export default function Nav() {
               <ListItemText primary="  admin " />
             </ListItem>
           </Link>
+          <Link to='/addquiz'>
+            <ListItem button>
+              <ListItemText primary="  اضافة امتحان " />
+            </ListItem>
+          </Link>
+          <Link to='/addstudentteacher'>
+            <ListItem button>
+              <ListItemText primary="Addstudentteacher " />
+            </ListItem>
+          </Link>
 
     </List>
+    }
         <Divider />
         
       </Drawer>
@@ -261,14 +310,19 @@ export default function Nav() {
           <Route exact path="/adminlogin" component={withRouter(Adminlogin)}/>
           <Route exact path="/teacherlogin" component={withRouter(Teacherlogin)}/>
           <Route exact path="/dashboard" component={withRouter(Dashboard)}/>
+          <Route exact path="/editteacher" component={withRouter(Editteacher)}/>
+          <Route exact path="/addstudentteacher" component={withRouter(Addstudentteacher)}/>
+          <Route exact path="/allquizadmin" component={withRouter(Allquizadmin)}/>
+          <Route exact path="/Allstudents" component={withRouter(Allstudents)}/>
 
              {/* ************** oss  ********* */}
           <Route  path="/grades" component={Studentgrade}/>
           <Route  path="/active" component={ActivationStudents}/>
           <Route  path="/edit" component={EditStudent}/>
-          <Route  path="/show-question" component={ShowQuestionsToAdmin}/>
           <Route  path="/studentgrades" component={GradesStudents}/>
           <Route  path="/adminpage" component={AdminPage}/>
+          <Route  path="/addquiz" component={AddQuiz}/>
+
  
 
       </Switch>

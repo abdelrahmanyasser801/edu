@@ -61,7 +61,7 @@ axios.get("https://edu-up.herokuapp.com/operators/dashboard/students")
       password: password,
       mobile: mobile,
       school_year_id: currentyear,
-      group_id: currentyear,
+      group_id: currentgroup,
       teacher_id: teacherid
     }
    
@@ -227,9 +227,9 @@ axios.get("https://edu-up.herokuapp.com/operators/dashboard/students")
          id="demo-simple-select-outlined"
           onChange={e=>setCurrentyear(e.target.value)}
         required>
-         {years.map(year=>{
+         {years.map((year, index)=>{
            return(
-           <MenuItem value={year.id}>{year.title}</MenuItem>
+           <MenuItem key={index} value={year.id}>{year.name}</MenuItem>
            )
          })}
          
@@ -257,9 +257,9 @@ axios.get("https://edu-up.herokuapp.com/operators/dashboard/students")
          id="demo-simple-select-outlined"
           onChange={e=>setCurrentgrp(e.target.value)}
           required>
-            {groups.map(grp=>{
+            {groups.map((grp,index)=>{
               return(
-                <MenuItem value={grp.id}>{grp.name}</MenuItem>
+                <MenuItem key={index} value={grp.id}>{grp.title}</MenuItem>
               )
             })}
       

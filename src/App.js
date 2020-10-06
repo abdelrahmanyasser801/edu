@@ -4,6 +4,10 @@ import React,{useEffect,useState} from 'react';
 import Nav from "./Nav/Nav.js"
 
 
+// {/* ************** tareq  ********* */}
+import ShowQuestionsToAdmin from "./ShowQuestionsToAdmin/index"
+import GradesStudents from "./Grades/index"
+import AdminPage from "./AdminPage/index"
 import {
   BrowserRouter as Router,
   Switch,
