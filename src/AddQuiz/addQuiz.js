@@ -79,7 +79,7 @@ export default function AddQuiz() {
     year_id: '',
     teacher_id: '',
     groups_ids: []
-
+    //subject_id: int
 
 
   });

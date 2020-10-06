@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Container from '@material-ui/core/Container';
 import './Allstudents.css';
 import axios from "axios"
-
+import { Link } from "react-router-dom"
 export default function ActivationStudents() {
     const [students, setStudents] = useState([])
     const [teachers, setTeachers] = useState([])
@@ -45,13 +45,21 @@ export default function ActivationStudents() {
                 console.log(err)
             })
     }, [])
+    const Delete = (id, e) => {
+        axios.delete(`https://edu-up.herokuapp.com/operators/dashboard/students/${id}`)
+        const newteachers = students.filter(item => item.id !== id);
+        setStudents(newteachers);
+    }
+    const Edit = (id, e) => {
+        localStorage.setItem("student_id", id)
+        window.location.href = "/editstudentdata"
+    }
+
     return (
 
         <div>
 
-            <Container className="welcome-exam-cont-os">
-                <h2 style={{ color: "white" }} >الامتحان  </h2>
-            </Container>
+
 
             {
                 console.log("students : ", students)
@@ -84,7 +92,7 @@ export default function ActivationStudents() {
                             <option className="option" value="0">الصف</option>
                             {years.map((year, index) => {
                                 return (
-                                    <option value={year.id}>{year.name}</option>
+                                    <option key={index} value={year.id}>{year.name}</option>
                                 )
                             })}
 
@@ -107,7 +115,7 @@ export default function ActivationStudents() {
                             <option className="option" value="0">المدرس</option>
                             {teachers.map((teacher, index) => {
                                 return (
-                                    <option value={teacher.id}>{teacher.username}</option>
+                                    <option key={index} value={teacher.id}>{teacher.username}</option>
                                 )
                             })}
 
@@ -121,7 +129,7 @@ export default function ActivationStudents() {
                             <option className="option" value="0">المجموعات</option>
                             {groups.map((grp, index) => {
                                 return (
-                                    <option value={grp.id}>{grp.title}</option>
+                                    <option key={index} value={grp.id}>{grp.title}</option>
                                 )
                             })}
 
@@ -136,13 +144,30 @@ export default function ActivationStudents() {
                 <Container className="view-grade-cont-os" >
                     {students.map((student, index) => {
                         return (
-                            <div>
+                            <div key={index}>
                                 <div className="student-name-os">
                                     <p style={{ textAlign: "right" }} className="p-oss"> {student.fname}{student.lname}</p>
                                 </div>
+                                <div>
 
+                                    <button className="btn-os2"
+                                        onClick={e => { Delete(student.id, e) }}
+                                    >حذف</button>
+                                    <Link to="/editstudentdata">
+                                        <button className="btn-os2"
+                                            onClick={e => { Edit(student.id, e) }}
+                                        >تعديل </button>
+                                    </Link>
+                                    {/**الدرجات لسه مش خلصانه */}
+                                    <Link to="/">
+                                        <button className="btn-os2"
+                                        >الدرجات </button>
+                                    </Link>
+
+                                </div>
 
                             </div>
+
 
                         )
                     })}

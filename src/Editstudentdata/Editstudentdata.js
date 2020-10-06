@@ -1,10 +1,9 @@
 import React,{useState , useEffect} from "react"
 import "./Editstudentdata.css"
-import {Grid,Input ,InputAdornment ,Select ,FormControl ,FormHelperText ,MenuItem ,InputLabel,Button , IconButton ,TextField } from '@material-ui/core/';
+import {Grid,Input,Select ,FormControl,MenuItem ,InputLabel,Button ,TextField } from '@material-ui/core/';
 import { makeStyles } from '@material-ui/core/styles';
 import Swal from "sweetalert2"
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
+
 import axios from "axios"
 export default function Addstudent(){
 useEffect(()=>{
@@ -12,18 +11,14 @@ axios.get("https://edu-up.herokuapp.com/operators/dashboard/students")
 .then(res=>{
   console.log(res)
   setGroups(res.data.groups)
-})
-.catch(err=>{
-  console.log(err)
-})
-axios.get("https://edu-up.herokuapp.com/operators/dashboard/students")
-.then(res=>{
-  console.log(res)
   setYears(res.data.school_years)
+  setTeachers(res.data.teachers)
+
 })
 .catch(err=>{
   console.log(err)
 })
+
 
 },[])
     const useStyles = makeStyles((theme) => ({
@@ -43,6 +38,8 @@ axios.get("https://edu-up.herokuapp.com/operators/dashboard/students")
     {/************************APIS ARRAYS************************** */}
     const [groups, setGroups] = useState([]);
     const [years, setYears] = useState([]);
+    const [teachers , setTeachers] =useState([])
+
     {/************************************************************** */}
     const classes = useStyles();
     const [fname,setFname]=useState('')
@@ -145,7 +142,7 @@ axios.get("https://edu-up.herokuapp.com/operators/dashboard/students")
         <form onSubmit={handlesubmit}>
 
         <div className="student-form">
-            <h1 className="student-title">تسجيل طالب</h1>
+            <h1 className="student-title">تعديل طالب</h1>
             <div>
             <Grid container spacing={3} 
             direction="column"
@@ -231,19 +228,25 @@ axios.get("https://edu-up.herokuapp.com/operators/dashboard/students")
           </Select>
           </FormControl>
           </Grid>
-       
-        <Grid item xs={12} >
-        <InputLabel className="inp1">رقم المدرس</InputLabel>
-        <TextField className="out-input"
-         id="outlined-basic20"  
-         type="number"
-         placeholder="ادخل رقم المدرس"   
-         required
-         onChange={e=>setTeacherid(e.target.value)}
+      
+        <Grid item xs={12}>
+          <FormControl variant="outlined">
+        <InputLabel id="demo-simple-select-outlined-label">المدرس</InputLabel>
+        <Select
+         labelId="demo-simple-select-outlined-label"
+         id="demo-simple-select-outlined"
+          onChange={e=>setTeacherid(e.target.value)}
+        required>
+         {teachers.map((teacher, index)=>{
+           return(
+           <MenuItem key={index} value={teacher.id}>{teacher.username}</MenuItem>
+           )
+         })}
+         
+          </Select>
+          </FormControl>
+          </Grid>
 
-         />
-
-        </Grid>
         <Grid item xs={12}>
         <FormControl variant="outlined">
         <InputLabel id="demo-simple-select-outlined-label">المجموعة</InputLabel>
