@@ -19,6 +19,7 @@ import Editteacher from "../Editteacher/Editteacher"
 import Addstudentteacher from "../Addstudentteacher/Addstudentteacher"
 import Allquizadmin from "../Allquizadmin/Allquizadmin"
 import Allstudents from "../Allstudents/Allstudents"
+import Editstudentdata from "../Editstudentdata/Editstudentdata"
 
 // {/* ************** oss  ********* */}
 import Studentgrade from "../Studentgrade/Studentgrade"
@@ -314,6 +315,7 @@ export default function Nav() {
           <Route exact path="/addstudentteacher" component={withRouter(Addstudentteacher)}/>
           <Route exact path="/allquizadmin" component={withRouter(Allquizadmin)}/>
           <Route exact path="/Allstudents" component={withRouter(Allstudents)}/>
+          <Route exact path="/editstudentdata" component={withRouter(Editstudentdata)}/>
 
              {/* ************** oss  ********* */}
           <Route  path="/grades" component={Studentgrade}/>

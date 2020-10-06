@@ -1,9 +1,20 @@
-import React, { Component, useState, useEffect } from 'react';
+import React, {useState, useEffect } from 'react';
 import Container from '@material-ui/core/Container';
 import './ActivationStudents.css';
 import axios from "axios"
-
+import {Link} from "react-router-dom"
 export default function ActivationStudents() {
+    const [yearState, setYearState] = useState(false)
+    const [teacherState, setTeacherState] = useState(false)
+    const [filtered, setfiltered] = useState([])
+    const [teachers, setTeachers] = useState([])
+    const [groups, setGroups] = useState([])
+    const [years, setYear] = useState([])
+
+    const [currentteacher, setCurrentteacher] = useState("")
+    const [currentyear, setCurrentyear] = useState("")
+    const [currentgroup, setCurrentgroup] = useState("")
+
     const [activestudents, setActivestudents] = useState([
 
         {
@@ -62,15 +73,35 @@ export default function ActivationStudents() {
     )
 
     const [examid, setexamid] = useState(localStorage.getItem("exam_id"))
-    {/** 
+    
     useEffect(()=>{
-        axios.get(https://edu-up.herokuapp.com/operators/dashboard/exams/${examid}/students)
+        axios.get(`https://edu-up.herokuapp.com/operators/dashboard/exams/${examid}/students)`)
         .then(res=>{
             setActivestudents(res.data.activated__students)
             setNotactivestudents(res.data.not_active_students)
         })
+        axios.get("https://edu-up.herokuapp.com/operators/dashboard/all_teachers")
+        .then(res => {
+            setTeachers(res.data.teachers)
+        }).catch(err => {
+            console.log(err)
+        })
+    axios.get("https://edu-up.herokuapp.com/operators/dashboard/teachers/teacher_id/groups")
+        .then(res => {
+            setYear(res.data.school_years)
+        }).catch(err => {
+            console.log(err)
+        })
+    axios.get("https://edu-up.herokuapp.com/operators/dashboard/students")
+        .then(res => {
+            console.log(res)
+            setGroups(res.data.groups)
+        })
+        .catch(err => {
+            console.log(err)
+        })
     },[])
-    */}
+    
     return (
 
         <div>
@@ -91,36 +122,72 @@ export default function ActivationStudents() {
 
 
 
-
                 <Container className="search-grade-cont-os" >
+
                     <Container className="custom-select" >
-                        <select className="select-os" >
+                        <select className="select-os"
+                            onChange={e => {
+                                setCurrentyear(e.target.value)
+                                const groupstemp = groups.filter(group => group.school_year_id == e.target.value)
+                                setGroups(groupstemp)
+                                setYearState(true)
+
+                            }}
+                            disabled={yearState}
+                        >
                             <option className="option" value="0">الصف</option>
-                            <option value="1">الاول</option>
-                            <option value="2">الثاني</option>
-                            <option value="3">الثالث</option>
+                            {years.map((year, index) => {
+                                return (
+                                    <option value={year.id}>{year.name}</option>
+                                )
+                            })}
+
                         </select>
                     </Container>
 
                     <Container className="custom-select" >
-                        <select className="select-os" >
-                            <option className="option" value="0">المجموعات</option>
-                            <option value="1">الاول</option>
-                            <option value="2">الثاني</option>
-                            <option value="3">الثالث</option>
+                        <select className="select-os"
+                            onChange={e => {
+                                setCurrentteacher(e.target.value)
+                                const groupstemp = groups.filter(group => group.teacher_id == e.target.value)
+                                setGroups(groupstemp)
+                                setTeacherState(true)
+
+                            }}
+                            disabled={teacherState}
+
+
+                        >
+                            <option className="option" value="0">المدرس</option>
+                            {teachers.map((teacher, index) => {
+                                return (
+                                    <option value={teacher.id}>{teacher.username}</option>
+                                )
+                            })}
+
                         </select>
                     </Container>
                     <Container className="custom-select" >
-                        <select className="select-os" >
-                            <option className="option" value="0">المدرس</option>
-                            <option value="1">الاول</option>
-                            <option value="2">الثاني</option>
-                            <option value="3">الثالث</option>
+                        <select className="select-os"
+                            onChange={e => { setCurrentgroup(e.target.value) }}
+
+                        >
+                            <option className="option" value="0">المجموعات</option>
+                            {groups.map((grp, index) => {
+                                return (
+                                    <option value={grp.id}>{grp.title}</option>
+                                )
+                            })}
+
                         </select>
                     </Container>
+
 
                     <input className="input-os" type="text" name="studentname" placeholder="ابحث  عن الطالب" />
                     <button className="btn-os" >ابحث</button>
+                    <Link to="/allquizadmin">
+                    <button className="btn-os" >انتهاء و رجوع</button>
+                    </Link>
                 </Container>
 
                 <Container className="view-grade-cont-os" >
