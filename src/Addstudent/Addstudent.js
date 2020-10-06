@@ -61,7 +61,7 @@ axios.get("https://edu-up.herokuapp.com/operators/dashboard/students")
       password: password,
       mobile: mobile,
       school_year_id: currentyear,
-      group_id: currentyear,
+      group_id: currentgroup,
       teacher_id: teacherid
     }
    

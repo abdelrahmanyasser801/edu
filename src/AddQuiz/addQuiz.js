@@ -76,7 +76,14 @@ export default function AddQuiz(){
       total_time:'',
       start_date:'',
       end_date:'',
+      year_id:'',
+      teacher_id:'',
+      groups_ids:[]
+
+
+
     });
+   
   
   
     useEffect(() => {
@@ -123,9 +130,9 @@ export default function AddQuiz(){
           setFilterGroup(tempFilter)
         };
 
-        const [selectGroup,setSelectGroups]=useState([])
+        const [groups_ids,setSelectGroups]=useState([])
         const handleChangeMultipleGroup = (e) => {
-         const tempSelect = selectGroup 
+         const tempSelect = groups_ids
           if(e.target.checked){
 
               tempSelect.push(+e.target.value)
@@ -136,18 +143,35 @@ export default function AddQuiz(){
               setSelectGroups(tempSelect)
           }
            
-          console.log(selectGroup)
-
         };
       
         
 
         const handleSubmit =(e)=>{
+          
 
           e.preventDefault();
-     
+          const tempo = {
+            ...dataExam,
+            "groups_ids":groups_ids,
+            "teacher_id":teacher_id
+          }
+          console.log(tempo)
+          axios.post("https://edu-up.herokuapp.com/operators/dashboard/exams",tempo)
+          .then(res=>{
 
-        };
+              if(res.dataExam){
+                console.log('done el7amdulellah')
+              }else{
+                console.log('error')
+              }
+
+              }).catch(error=>{
+                console.log(error)
+              })
+            
+            
+            };
 
 
       const useStyles = makeStyles((theme) => ({
@@ -195,7 +219,6 @@ export default function AddQuiz(){
 
     return(
         <div className="addquestion-form">
-          {console.log(incomeData)}
             <form>
             <Grid container spacing={3} xs={12}
             direction="column"
@@ -231,9 +254,10 @@ export default function AddQuiz(){
                       <Select
                         labelId="demo-simple-select-outlined-label"
                         id="demo-simple-select-outlined"
-                        onChange={handleChangeYear}
+                        onChange={handleChangeData}
                         label="السنة الدراسية"
-                        value={year_id}
+                        value={dataExam.year_id}
+                        name="year_id"
                       >{
 
                         incomeData.school_years.map(year=>{
@@ -272,6 +296,7 @@ export default function AddQuiz(){
                         label=" المدرس"
                         value={teacher_id}
                         onChange={handleChangeTeacher}
+                        
                       >
                          
                         {
