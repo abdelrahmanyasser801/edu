@@ -27,15 +27,31 @@ export default function Addgroup(){
   
   },[])
  
-    const[groups,setGroups]=useState([]);
-    const[firstgroup,setFirstgroup]=useState(null);
+    const[allgroups,setGroups]=useState([]);
+    const[firstgroup,setFirstgroup]=useState("");
     const [currentgroup, setCurrentgroup] = useState('')
 
    
     const data ={
-      name:firstgroup,
-      school_year_id:currentgroup
-    }
+      groups: [
+        {
+        "name": "الساعة 9",
+        "school_year_id": 1
+        },
+        {
+        "name": "الساعة 10",
+        "school_year_id": 1
+        },
+        {
+        "name": "الساعة 11",
+        "school_year_id": 1
+        },
+        {
+        "name": "الساعة 12",
+        "school_year_id": 2
+        }
+        ]
+    };
      
     const handleChange =(e)=>{
       setCurrentgroup(e.target.value)
@@ -84,7 +100,6 @@ export default function Addgroup(){
         console.log(err)
         if (err.response) {
           const status =err.response.status;
-          const dta =err.response.data;
           // The request was made and the server responded with a status code
           // that falls out of the range of 2xx
           //window.alert(error.response.status);
@@ -93,7 +108,7 @@ export default function Addgroup(){
           Swal.fire({
             icon: 'error',
             title: 'Oops...',
-            text: status+" "+dta,
+            text: status,
           });        return false;
           
   
@@ -194,7 +209,7 @@ export default function Addgroup(){
          id="demo-simple-select-outlined"
           onChange={handleChange}
         >
-          {groups.map((group,index)=>{
+          {allgroups.map((group,index)=>{
             return(
               <MenuItem key={index} value={group.id}>{group.name}</MenuItem>
             )

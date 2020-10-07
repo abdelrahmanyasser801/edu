@@ -31,11 +31,7 @@ export default function Adminview(){
     .then(res=>{
       console.log(res.data)
       setallteachers(res.data.teachers)
-      this.history.push({
-        pathname: '/addstudentteacher',
-        search: '?query=ownerInformation',
-        state: { data: res.data.teachers }
-      })
+      
       
     })
     .catch(err=>{
@@ -92,7 +88,7 @@ export default function Adminview(){
     return(
 
             <Grid item
-        
+            key={index}
             >
             <Card className={classes.root}>
       <CardActionArea>

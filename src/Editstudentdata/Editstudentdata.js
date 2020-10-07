@@ -54,12 +54,12 @@ axios.get("https://edu-up.herokuapp.com/operators/dashboard/students")
     const data={  
       fname: fname,
       lname: lname,
-      username: username,
-      password: password,
-      mobile: mobile,
-      school_year_id: currentyear,
-      group_id: currentgroup,
-      teacher_id: teacherid
+     // username: username,
+     // password: password,
+     // mobile: mobile,
+     // school_year_id: currentyear,
+     // group_id: currentgroup,
+     // teacher_id: teacherid
     }
    
     const handlesubmit = (e) =>
@@ -72,7 +72,7 @@ axios.get("https://edu-up.herokuapp.com/operators/dashboard/students")
         icon: 'success',
         text: "تم التعديل",
       })
-    window.location.href="/edit"
+    window.location.href="/allstudents"
     }else{
         Swal.fire({
             icon: 'error',
