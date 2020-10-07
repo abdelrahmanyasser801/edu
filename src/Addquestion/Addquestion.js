@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react"
 import { Grid, Select, FormControl, FormHelperText, MenuItem, InputLabel, Button, IconButton, TextField } from '@material-ui/core/';
 import "./Addquestion.css"
 import { makeStyles } from '@material-ui/core/styles';
-
+import axios from 'axios'
 export default function Addquestion() {
+  const [examid, setexamid] = useState(localStorage.getItem("exam_id"))
   const [dataQuestion, setDataQuestion] = useState({
     question_head: '',
     grade: '',
@@ -12,10 +13,25 @@ export default function Addquestion() {
     answer2: '',
     answer3: '',
   });
+  const [inComeDate, setIncome] = useState({})
+  const [teachers, setTeachers] = useState([])
+  const [schoolYear, setSchoolYear] = useState([])
+  const [subject, setSubject] = useState([])
 
-  const [subject_id, setSubject] = useState('');
+  const [subject_id, setSubjectID] = useState('');
 
+  useEffect(() => {
+    axios.get(`https://edu-up.herokuapp.com/operators/dashboard/exams/${examid}/questions`).then(res => {
+      // setIncome(res.data)
 
+      console.log(inComeDate)
+      setTeachers(inComeDate.teachers)
+      setSubject(inComeDate.subject)
+      setSchoolYear(inComeDate.school_years)
+    }).catch(e => {
+      console.log(e)
+    })
+  }, [])
 
   const handleChangeData = (e) => {
     setDataQuestion({
@@ -24,7 +40,7 @@ export default function Addquestion() {
     });
   };
   const handleChangeSubject = (e) => {
-    setSubject(e.target.value)
+    setSubjectID(e.target.value)
       ;
   };
 

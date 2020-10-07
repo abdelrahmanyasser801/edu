@@ -78,8 +78,8 @@ export default function AddQuiz() {
     end_date: '',
     year_id: '',
     teacher_id: '',
-    groups_ids: []
-    //subject_id: int
+    groups_ids: [],
+    subject_id: -1
 
 
   });
@@ -117,8 +117,7 @@ export default function AddQuiz() {
 
 
   const handleChangeSubject = (e) => {
-    setSubject(e.target.value)
-      ;
+    setSubject(+e.target.value);
   };
   const handleChangeYear = (e) => {
     setYear(e.target.value)
@@ -156,16 +155,19 @@ export default function AddQuiz() {
 
 
 
-  const handleSubmit = (e) => {
+  async function handleSubmit(e) {
 
 
     e.preventDefault();
-    const tempo = {
+    const tempo = await {
       ...dataExam,
       "groups_ids": groups_ids,
-      "teacher_id": teacher_id
+      "teacher_id": +teacher_id,
+      "subject_id": +subject_id,
+      "year_id": +year_id
     }
     console.log(tempo)
+
     axios.post("https://edu-up.herokuapp.com/operators/dashboard/exams", tempo)
       .then(res => {
 
@@ -281,15 +283,6 @@ export default function AddQuiz() {
             </FormControl>
           </Grid>
 
-
-          {
-
-
-              /* {incomeData.groups.map(group=>{
-                return(
-                <h1>{group.id}</h1>
-                )
-              })} */}
 
 
           <Grid item xs={12}>
