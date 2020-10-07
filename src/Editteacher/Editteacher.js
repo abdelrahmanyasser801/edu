@@ -3,8 +3,6 @@ import "./Editteacher.css"
 import {Grid, Input ,InputAdornment , Select ,FormControl ,FormHelperText ,MenuItem ,InputLabel,Button , IconButton ,TextField } from '@material-ui/core/';
 import { makeStyles } from '@material-ui/core/styles';
 import Swal from "sweetalert2"
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import axios from "axios"
 export default function Editteacher(){
   useEffect (()=>{
@@ -49,10 +47,11 @@ export default function Editteacher(){
           {/** POST DATA*/}
           const data={
             username:name,
-            password:password,
-            mobile:phone,
-            image_url:imgData,
-            subject_id:currentsub
+           
+           // password:password,
+           // mobile:phone,
+           // image_url:imgData,
+            //subject_id:currentsub
           }
     
     const handleChange = (event) => {

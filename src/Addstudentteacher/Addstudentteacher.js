@@ -13,6 +13,7 @@
             setYears(res.data.school_years)
             setStudents(res.data.not_teacher_students)
             })
+            
             .catch(err=>{
             console.log(err)
             })
@@ -22,17 +23,31 @@
                 const [Groups , setGroups] = useState([])
                 const [years , setYears] = useState([])
                 const [students , setStudents] = useState([])
+                const [newstudents , setNewstudents] = useState([])
                 const [currentyear , setCurrntyear] = useState("")
                 const [currentgrp , setCurrentgrp] = useState("")
                 const [localid ,setlocalid] = useState(localStorage.getItem('teacher_id'))
                 const data={
                     group_id:currentgrp
                 }
+                
                 const addstd=(id ,e)=>{
+                    if(currentgrp===""){
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'تأكد من اختيار المجموعه اولا',
+                            showConfirmButton: true,
+                          }) 
+                     }
+                     else{
+
                         axios.put(`https://edu-up.herokuapp.com/operators/dashboard/teachers/${localid}/not_students/${id}`,data)
                         console.log("localid",localid)
                         console.log("id",id)
                         console.log("grpid",currentgrp)
+                        const newdata = students.filter(item=>
+                            item.id!==id
+                        )
                         if(data){
                             Swal.fire({
                                 icon: 'success',
@@ -46,14 +61,16 @@
                                 showConfirmButton: true,
                               }) 
                              }
-                             if(currentgrp===""){
-                                Swal.fire({
-                                    icon: 'error',
-                                    title: 'تأكد من اختيار المجموعه اولا',
-                                    showConfirmButton: true,
-                                  }) 
-                             }
+                             setStudents(newdata)
+
+                             console.log(newdata)
+
+                             
                     }
+
+                }
+                console.log("after function",students)
+
             return (
                 
                 <div>
@@ -118,11 +135,12 @@
                         <Container className="view-grade-cont-os" >
 
                             <div>
+                                
                             {students.map((student,index)=>{
                                         return(
-                                <div className="student-name-os">
+                                <div key={index} className="student-name-os">
                                    
-                                <div key={index}>
+                                <div >
                                 <p  className="p-oss" value={student.id}>{student.fname} {student.lname}</p>
 
                                 </div>
@@ -138,7 +156,8 @@
                         </Container>
                     </Container>
 
-
+                {console.log("after render",students)}
+                            
                 </div>
             )
     }
