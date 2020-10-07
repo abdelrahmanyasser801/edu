@@ -1,8 +1,9 @@
-import React, {useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Container from '@material-ui/core/Container';
 import './ActivationStudents.css';
 import axios from "axios"
-import {Link} from "react-router-dom"
+import swal from "sweetalert2"
+import { Link } from "react-router-dom"
 export default function ActivationStudents() {
     const [yearState, setYearState] = useState(false)
     const [teacherState, setTeacherState] = useState(false)
@@ -73,35 +74,43 @@ export default function ActivationStudents() {
     )
 
     const [examid, setexamid] = useState(localStorage.getItem("exam_id"))
-    
-    useEffect(()=>{
+
+    useEffect(() => {
         axios.get(`https://edu-up.herokuapp.com/operators/dashboard/exams/${examid}/students)`)
-        .then(res=>{
-            setActivestudents(res.data.activated__students)
-            setNotactivestudents(res.data.not_active_students)
-        })
+            .then(res => {
+                setActivestudents(res.data.activated__students)
+                setNotactivestudents(res.data.not_active_students)
+            })
         axios.get("https://edu-up.herokuapp.com/operators/dashboard/all_teachers")
-        .then(res => {
-            setTeachers(res.data.teachers)
-        }).catch(err => {
-            console.log(err)
-        })
-    axios.get("https://edu-up.herokuapp.com/operators/dashboard/teachers/teacher_id/groups")
-        .then(res => {
-            setYear(res.data.school_years)
-        }).catch(err => {
-            console.log(err)
-        })
-    axios.get("https://edu-up.herokuapp.com/operators/dashboard/students")
-        .then(res => {
-            console.log(res)
-            setGroups(res.data.groups)
-        })
-        .catch(err => {
-            console.log(err)
-        })
-    },[])
-    
+            .then(res => {
+                setTeachers(res.data.teachers)
+            }).catch(err => {
+                console.log(err)
+            })
+        axios.get("https://edu-up.herokuapp.com/operators/dashboard/teachers/teacher_id/groups")
+            .then(res => {
+                setYear(res.data.school_years)
+            }).catch(err => {
+                console.log(err)
+            })
+        axios.get("https://edu-up.herokuapp.com/operators/dashboard/students")
+            .then(res => {
+                console.log(res)
+                setGroups(res.data.groups)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }, [])
+    const handelActivation = (id) => {
+        try {
+            axios.put(`https://edu-up.herokuapp.com/operators/dashboard/exams/${examid}/students/${id}`).then(
+                swal.fire("Activating Done!...")
+            )
+        } catch (e) {
+            console.log(e)
+        }
+    }
     return (
 
         <div>
@@ -186,7 +195,7 @@ export default function ActivationStudents() {
                     <input className="input-os" type="text" name="studentname" placeholder="ابحث  عن الطالب" />
                     <button className="btn-os" >ابحث</button>
                     <Link to="/allquizadmin">
-                    <button className="btn-os" >انتهاء و رجوع</button>
+                        <button className="btn-os" >انتهاء و رجوع</button>
                     </Link>
                 </Container>
 
@@ -200,7 +209,11 @@ export default function ActivationStudents() {
                                     </div>
 
                                     <button className="btn-active-os" disabled>تفعيل</button>
-                                    <button className="btn-active-os" >عدم تفعيل</button>
+                                    <button className="btn-active-os" onClick={() => {
+                                        axios.delete(`https://edu-up.herokuapp.com//operators/dashboard/exams/${examid}/students/${student.id}`).then(
+                                            swal.fire("Deactivation Done !...")
+                                        )
+                                    }} >عدم تفعيل</button>
                                 </div>
 
                             )
@@ -215,7 +228,7 @@ export default function ActivationStudents() {
                                         <p style={{ textAlign: "right" }} className="p-oss"> {student.fname}{student.lname}</p>
                                     </div>
 
-                                    <button className="btn-active-os" >تفعيل</button>
+                                    <button className="btn-active-os" onClick={() => { handelActivation(student.id) }} >تفعيل</button>
                                     <button className="btn-active-os" disabled>عدم تفعيل</button>
                                 </div>
 
@@ -229,6 +242,6 @@ export default function ActivationStudents() {
             </Container>
 
 
-        </div>
+        </div >
     )
 }
